@@ -4,3 +4,49 @@ html {
   padding: 0;
   box-sizing: border-box;
 }
+
+/// Theme ///
+
+// $default-theme-colors: (
+//   primary: #fff,
+//   accent: #0085ff,
+//   body-text-1: #576e78,
+//   body-text-2: #cecece,
+//   body-text-3: #b4b4b4,
+//   card-bg-1: #f0f0f0,
+//   card-bg-2: #161e2d,
+//   red: #ff274e,
+//   yellow: #ffe600,
+//   light-blue: #d0eeff,
+//   heading: #000,
+// );
+
+@mixin default-theme {
+  --primary: #fff;
+  --accent: #0085ff;
+  --body-text-1: #576e78;
+  --body-text-2: #cecece;
+  --body-text-3: #b4b4b4;
+  --card-bg-1: #f0f0f0;
+  --card-bg-2: #161e2d;
+  --red: #ff274e;
+  --yellow: #ffe600;
+  --light-blue: #d0eeff;
+  --heading: #000;
+}
+
+:root {
+  // adding colors (for default theme)
+  //   @each $name, $color in $default-theme-colors {
+  //     --#{$name}: #{$color};
+  //   }
+
+  @include default-theme;
+}
+
+/// Elements ///
+
+body {
+  color: var(--primary);
+  font-family: "Sofia Pro", sans-serif;
+}
