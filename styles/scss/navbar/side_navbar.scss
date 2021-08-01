@@ -1,0 +1,73 @@
+@mixin button-text-bold($color: var(--body-text-1)) {
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: 140%;
+  word-spacing: 4%;
+  color: $color;
+}
+
+.navbar {
+  width: 227px;
+  height: 100vh;
+  padding: 2rem 0.5rem;
+  background: var(--card-bg-1);
+
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar .navbar-nav {
+  margin-bottom: 2rem;
+}
+
+/// Navbar Btn ///
+
+@mixin navbar-btn($color, $bg-color) {
+  width: 100%;
+  padding: 0.625rem 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: none;
+  border-radius: 8px;
+  background: $bg-color;
+
+  .icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    svg path {
+      fill: $color;
+    }
+  }
+
+  .text {
+    margin-left: 1rem;
+    font-size: 17px;
+    @include button-text-bold($color);
+  }
+}
+
+.navbar .navbar-nav .nav-item .navbar-btn {
+  @include navbar-btn(var(--body-text-1), var(--card-bg-1));
+}
+
+.navbar .navbar-nav .nav-item .navbar-btn-active {
+  @include navbar-btn(var(--primary), var(--accent));
+}
+
+/// Logo Section ///
+
+.navbar .navbar-nav .logo-section {
+  background: var(--heading);
+  height: 78px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 76px;
+  border-radius: 16px;
+}

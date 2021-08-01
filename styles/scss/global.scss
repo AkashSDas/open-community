@@ -41,12 +41,15 @@ html {
   //     --#{$name}: #{$color};
   //   }
 
+  --font-head: "Sofia Pro", sans-serif;
+  --font-body: "Sofia Pro", sans-serif;
+
   @include default-theme;
 }
 
 /// Elements ///
 
 body {
-  color: var(--primary);
+  color: var(--body-text-1);
   font-family: "Sofia Pro", sans-serif;
 }
