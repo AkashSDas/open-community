@@ -1,0 +1,106 @@
+$font-head: "Sofia Pro", sans-serif;
+$font-body: "Sofia Pro", sans-serif;
+
+$text-color: #576e7b;
+
+/// Typography ///
+
+$h1-font-size: 60px;
+$h2-font-size: 50px;
+$h3-font-size: 40px;
+$h4-font-size: 30px;
+$body-intro: 24px;
+$body-main: 20px;
+$medium-text: 17px;
+$caption-text: 15px;
+$small-text: 13px;
+
+$h1-font-size-mobile: 34px;
+$h2-font-size-mobile: 32px;
+$h3-font-size-mobile: 28px;
+$h4-font-size-mobile: 24px;
+$body-intro-mobile: 20px;
+$body-main-mobile: 17px;
+
+/// Heading Font Styles ///
+
+@mixin heading-font($font-size) {
+  font-size: $font-size;
+  font-family: $font-head;
+  font-style: normal;
+  font-weight: bold;
+  line-height: $font-size;
+  color: black;
+}
+
+// changing heading style at different media query
+@mixin font-style-change(
+  $max-width,
+  $font-size,
+  $is-heading: true,
+  $line-height: null
+) {
+  @media (max-width: $max-width) {
+    font-size: $font-size;
+
+    @if ($is-heading) {
+      line-height: $font-size;
+    } @else {
+      line-height: $line-height;
+    }
+  }
+}
+
+h1 {
+  @include heading-font($h1-font-size);
+  @include font-style-change(1023px, $h2-font-size);
+  @include font-style-change(767px, $h1-font-size-mobile);
+}
+
+h2 {
+  @include heading-font($h2-font-size);
+  @include font-style-change(1023px, $h2-font-size-mobile);
+}
+
+h3 {
+  @include heading-font($h3-font-size);
+  @include font-style-change(1023px, $h3-font-size-mobile);
+}
+
+h4 {
+  @include heading-font($h4-font-size);
+  @include font-style-change(1023px, $h4-font-size-mobile);
+}
+
+/// Body Font Styles ///
+
+@mixin body-font($font-size, $line-height: 140%, $color: $text-color) {
+  font-size: $font-size;
+  font-family: $font-body;
+  font-style: normal;
+  line-height: $line-height;
+  color: $color;
+}
+
+.body-intro {
+  @include body-font($body-intro);
+  @include font-style-change(1023px, $body-intro-mobile, false, 140%);
+  font-weight: 500; // medium
+}
+
+.body-main {
+  @include body-font($body-main);
+  @include font-style-change(1023px, $body-main-mobile, false, 140%);
+}
+
+.medium-text {
+  @include body-font($medium-text);
+}
+
+.caption-text {
+  @include body-font($caption-text);
+}
+
+.small-text {
+  @include body-font($small-text);
+}
