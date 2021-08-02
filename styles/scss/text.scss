@@ -104,3 +104,13 @@ h4 {
 .small-text {
   @include body-font($small-text);
 }
+
+/// Other Font Styles ///
+
+@mixin button-text-bold($color: var(--body-text-1)) {
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: 140%;
+  word-spacing: 4%;
+  color: $color;
+}
