@@ -12,6 +12,73 @@
   margin: 1rem auto;
 }
 
+/// Section 2 ///
+
+.sign-up-section .section-2 {
+  .title {
+    @include section-title;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    // label {
+    //   font-size: 15px;
+    //   font-weight: 700;
+    //   color: var(--heading);
+    //   margin-bottom: 0.5rem;
+    // }
+
+    input {
+      border: none;
+      width: 360px;
+      height: 52px;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      font-family: var(--font-body);
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      line-height: 20px;
+      letter-spacing: 0.04em;
+
+      color: var(--body-text-1);
+      outline: none;
+      background-color: var(--form-input-bg);
+
+      &::placeholder {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 20px;
+        letter-spacing: 0.04em;
+        color: var(--body-text-3);
+      }
+    }
+
+    .username-msg {
+      margin-bottom: 1rem;
+
+      .checking {
+        font-weight: 700;
+      }
+
+      .text-success {
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      .text-danger {
+        font-weight: 700;
+        color: var(--red);
+      }
+    }
+  }
+}
+
 /// Section 1 ///
 .sign-up-section .section-1 {
   .title {
@@ -69,5 +136,61 @@
 
   .inactive {
     width: 0.5rem;
+  }
+}
+
+/// Section 3 ///
+.sign-up-section .section-3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  // align-items: center;
+
+  svg {
+    height: 200px;
+    width: 200px;
+    path {
+      fill: var(--body-text-3);
+    }
+  }
+
+  .greeting-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 4rem;
+    margin-top: 1rem;
+
+    background: linear-gradient(
+      94.77deg,
+      #8000ff 0%,
+      rgba(128, 0, 255, 0.68) 100%
+    );
+    border-radius: 14px;
+
+    width: 560px;
+    height: 140px;
+
+    .greeting {
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 40px;
+      letter-spacing: 0.14em;
+      color: white;
+    }
+
+    .msg {
+      margin-top: 1rem;
+      color: white;
+      font-weight: 900;
+      font-size: 17px;
+      line-height: 17px;
+      letter-spacing: 0.04em;
+    }
+  }
+
+  button {
+    margin-top: 1rem;
   }
 }
