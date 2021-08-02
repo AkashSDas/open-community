@@ -1,0 +1,69 @@
+.sign-up-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  border-radius: 20px;
+  background-color: var(--card-bg-1);
+}
+
+/// Section 1 ///
+.sign-up-section .section-1 {
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--heading);
+    margin: 1rem auto;
+  }
+
+  .helper {
+    margin-top: 3.125rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    div div {
+      span {
+        font-weight: 700;
+      }
+
+      &:first-of-type {
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    svg {
+      height: 80px;
+      width: 80px;
+      path {
+        fill: var(--body-text-3);
+      }
+    }
+  }
+}
+
+/// Slider ///
+.sign-up-section .slider {
+  span {
+    display: inline-block;
+    margin-right: 0.5rem;
+
+    height: 0.5rem;
+    border-radius: 1rem;
+    background-color: var(--heading);
+
+    &:last-of-type {
+      margin-right: 0rem;
+    }
+
+    // transform-origin: center;
+    transition: all 300ms ease-in-out;
+  }
+
+  .active {
+    width: 3rem;
+  }
+
+  .inactive {
+    width: 0.5rem;
+  }
+}
