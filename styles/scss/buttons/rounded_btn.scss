@@ -1,0 +1,16 @@
+.rounded-btn {
+  width: 100%;
+  padding: 0.875rem 2rem 0.813rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--accent);
+  border: none;
+  border-radius: 35px;
+  outline: none;
+
+  @include button-text-bold(var(--primary));
+}
