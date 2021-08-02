@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { SignUpWithGoogle } from "../components/buttons/sign_up_btn";
 import HeadingWithIcon from "../components/common/heading_with_icon";
 import LogoSVG from "../components/svg_icons/logo";
 import UserPlusSVG from "../components/svg_icons/user_plus";
+import { UserContext } from "../lib/context";
 
 function SignUp() {
   return (
@@ -14,8 +16,10 @@ function SignUp() {
 }
 
 function SignUpCard() {
+  const { user, username } = useContext(UserContext);
+
   const [signUpInfo, setSignUpInfo] = useState({
-    displaySection: 0,
+    displaySection: user ? (username ? 2 : 1) : 0,
     hasSignedUp: false,
   });
 
@@ -24,14 +28,10 @@ function SignUpCard() {
       return <Section1 signUpInfo={signUpInfo} setSignUpInfo={setSignUpInfo} />;
 
     if (signUpInfo.displaySection === 1) {
-      return <div></div>;
+      return <Section2 />;
     }
 
     if (signUpInfo.displaySection === 2) {
-      return <div></div>;
-    }
-
-    if (signUpInfo.displaySection === 3) {
       return <div></div>;
     }
   };
@@ -40,6 +40,14 @@ function SignUpCard() {
     <section className="sign-up-section">
       <Slider sectionId={signUpInfo.displaySection} />
       {displaySection()}
+    </section>
+  );
+}
+
+function Section2() {
+  return (
+    <section className="section-2">
+      <div className="title">Choose your username</div>
     </section>
   );
 }
@@ -79,7 +87,7 @@ function Section1({ signUpInfo, setSignUpInfo }: Section1Props) {
 function Slider(props: { sectionId: number }) {
   return (
     <div className="slider">
-      {[0, 1, 2, 3].map((spanNum: number, key: number) => (
+      {[0, 1, 2].map((spanNum: number, key: number) => (
         <span
           key={key}
           className={spanNum === props.sectionId ? "active" : "inactive"}
