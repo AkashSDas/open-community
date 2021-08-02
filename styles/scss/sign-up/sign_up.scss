@@ -5,13 +5,17 @@
   background-color: var(--card-bg-1);
 }
 
+@mixin section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 1rem auto;
+}
+
 /// Section 1 ///
 .sign-up-section .section-1 {
   .title {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--heading);
-    margin: 1rem auto;
+    @include section-title;
   }
 
   .helper {
