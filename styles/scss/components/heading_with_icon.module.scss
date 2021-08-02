@@ -1,0 +1,22 @@
+$icon-dim: 50px;
+
+.heading-with-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: $icon-dim;
+
+  .icon {
+    margin-right: 1rem;
+
+    svg {
+      height: $icon-dim;
+      width: $icon-dim;
+
+      path {
+        stroke: var(--heading);
+        fill: var(--yellow);
+      }
+    }
+  }
+}
