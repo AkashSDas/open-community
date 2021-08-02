@@ -1,3 +1,4 @@
+import RoundedButton from "../buttons/rounded_btn";
 import CupSVG from "../svg_icons/cup";
 import EditSVG from "../svg_icons/edit";
 import HomeSVG from "../svg_icons/home";
@@ -44,6 +45,8 @@ export function SideNavbar() {
     new NavbarSectionItem(<UserPlusSVG />, "Login", false),
   ];
 
+  const navSections: NavbarSectionItem[][] = [section1, section2, section3];
+
   return (
     <nav className="navbar">
       <NavSection>
@@ -51,38 +54,23 @@ export function SideNavbar() {
           <LogoSection />
         </NavItem>
       </NavSection>
+
+      {navSections.map((section: NavbarSectionItem[], key: number) => (
+        <NavSection key={key}>
+          {section.map((navItem: NavbarSectionItem, itemKey: number) => (
+            <NavItem key={itemKey}>
+              <NavbarBtn
+                icon={navItem.icon}
+                text={navItem.text}
+                active={navItem.active}
+              />
+            </NavItem>
+          ))}
+        </NavSection>
+      ))}
+
       <NavSection>
-        {section1.map((value: NavbarSectionItem, key: number) => (
-          <NavItem key={key}>
-            <NavbarBtn
-              icon={value.icon}
-              text={value.text}
-              active={value.active}
-            />
-          </NavItem>
-        ))}
-      </NavSection>
-      <NavSection>
-        {section2.map((value: NavbarSectionItem, key: number) => (
-          <NavItem key={key}>
-            <NavbarBtn
-              icon={value.icon}
-              text={value.text}
-              active={value.active}
-            />
-          </NavItem>
-        ))}
-      </NavSection>
-      <NavSection>
-        {section3.map((value: NavbarSectionItem, key: number) => (
-          <NavItem key={key}>
-            <NavbarBtn
-              icon={value.icon}
-              text={value.text}
-              active={value.active}
-            />
-          </NavItem>
-        ))}
+        <RoundedButton onClick={() => {}} text="Sign Up" />
       </NavSection>
     </nav>
   );

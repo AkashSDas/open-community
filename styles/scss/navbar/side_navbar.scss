@@ -1,11 +1,3 @@
-@mixin button-text-bold($color: var(--body-text-1)) {
-  font-family: var(--font-body);
-  font-weight: 700;
-  line-height: 140%;
-  word-spacing: 4%;
-  color: $color;
-}
-
 .navbar {
   width: 227px;
   height: 100vh;
@@ -16,6 +8,21 @@
   flex-direction: column;
 
   overflow-y: scroll;
+
+  // Styling the scrollbar
+
+  &::-webkit-scrollbar {
+    width: 0.3rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--card-bg-1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--body-text-1);
+    border-radius: 8px;
+  }
 }
 
 .navbar .navbar-nav {
@@ -74,6 +81,11 @@
 .navbar .navbar-nav .nav-item .navbar-btn:hover,
 .navbar .navbar-nav .nav-item .navbar-btn-active {
   @include navbar-btn(var(--primary), var(--accent));
+}
+
+.navbar .navbar-nav:last-of-type {
+  margin-top: auto;
+  margin-bottom: 0;
 }
 
 /// Logo Section ///
