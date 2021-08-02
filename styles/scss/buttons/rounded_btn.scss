@@ -13,4 +13,5 @@
   outline: none;
 
   @include button-text-bold(var(--primary));
+  font-size: 17px;
 }
