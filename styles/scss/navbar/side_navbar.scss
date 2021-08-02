@@ -14,6 +14,8 @@
 
   display: flex;
   flex-direction: column;
+
+  overflow-y: scroll;
 }
 
 .navbar .navbar-nav {
@@ -40,6 +42,22 @@
     svg path {
       fill: $color;
     }
+
+    .edit-icon,
+    .user-icon,
+    .saved-icon,
+    .user-plus-icon,
+    .settings-icon,
+    .menu-icon {
+      path {
+        fill: none !important;
+        stroke: $color;
+      }
+    }
+
+    svg .inner-path {
+      stroke: $color;
+    }
   }
 
   .text {
@@ -53,6 +71,7 @@
   @include navbar-btn(var(--body-text-1), var(--card-bg-1));
 }
 
+.navbar .navbar-nav .nav-item .navbar-btn:hover,
 .navbar .navbar-nav .nav-item .navbar-btn-active {
   @include navbar-btn(var(--primary), var(--accent));
 }

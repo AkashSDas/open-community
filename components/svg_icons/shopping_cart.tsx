@@ -12,6 +12,7 @@ function ShoppingCartSVG() {
         fill="white"
       />
       <path
+        className="inner-path"
         d="M14 7L14.0408 7.00583C15.7484 7.24978 17 8.51614 17 10"
         stroke="white"
         stroke-width="1.5"

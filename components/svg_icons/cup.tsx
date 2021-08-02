@@ -12,6 +12,7 @@ function CupSVG() {
         fill="white"
       />
       <path
+        className="inner-path"
         d="M6 11.5V12.2639C6 13.7344 6.34237 15.1847 7 16.5"
         stroke="white"
         stroke-width="1.5"
