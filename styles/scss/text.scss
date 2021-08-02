@@ -30,7 +30,7 @@ $body-main-mobile: 17px;
   font-style: normal;
   font-weight: bold;
   line-height: $font-size;
-  color: black;
+  color: var(--heading);
 }
 
 // changing heading style at different media query

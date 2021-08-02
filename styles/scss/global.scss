@@ -44,6 +44,8 @@ html {
   --font-head: "Sofia Pro", sans-serif;
   --font-body: "Sofia Pro", sans-serif;
 
+  --side-navbar-width: 227px;
+
   @include default-theme;
 }
 
@@ -56,4 +58,9 @@ body {
 
 button:hover {
   cursor: pointer;
+}
+
+main {
+  margin-left: var(--side-navbar-width);
+  padding: 2rem;
 }

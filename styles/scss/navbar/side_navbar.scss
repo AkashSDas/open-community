@@ -1,5 +1,6 @@
 .navbar {
-  width: 227px;
+  position: fixed;
+  width: var(--side-navbar-width);
   height: 100vh;
   padding: 2rem 0.5rem;
   background: var(--card-bg-1);
