@@ -38,3 +38,17 @@
   letter-spacing: 0.04em;
   color: var(--primary);
 }
+
+.simple-btn {
+  border: none;
+  border-radius: 0.25rem;
+  background-color: var(--accent);
+  color: var(--primary);
+  padding: 0.625rem 1rem;
+  width: 94px;
+  font-weight: 700;
+  font-family: var(--font-head);
+  line-height: 140%;
+  letter-spacing: 0.04em;
+  font-size: 17px;
+}
