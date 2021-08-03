@@ -1,0 +1,162 @@
+$form-element-width: 682px;
+$margin-in-between: 1rem;
+
+@mixin text-form-input {
+  width: $form-element-width;
+  margin-bottom: $margin-in-between;
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: var(--body-text-3);
+  }
+}
+
+.write-section form {
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    resize: none;
+
+    @include text-form-input;
+    @include heading-font($h2-font-size);
+    @include font-style-change(1023px, $h2-font-size-mobile);
+  }
+
+  .description {
+    resize: none;
+    font-family: var(--font-body);
+    color: var(--body-text-1);
+
+    @include text-form-input;
+    @include body-intro-text;
+  }
+}
+
+/// Input Type 1 ///
+
+.write-section .tags-input {
+  margin-bottom: $margin-in-between;
+
+  label {
+    color: var(--heading);
+    font-weight: 700;
+    background-color: var(--card-bg-1);
+    padding: 0.375rem 0.875rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 24px;
+  }
+
+  .input {
+    width: $form-element-width;
+    background-color: var(--card-bg-1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625rem 0.875rem;
+    border-radius: 4px;
+    border-top-left-radius: 0px;
+
+    input {
+      border: none;
+      outline: none;
+      background-color: var(--card-bg-1);
+      width: 95%;
+      @include medium-text;
+
+      &::placeholder {
+        color: var(--body-text-3);
+      }
+    }
+
+    .add-btn {
+      border: none;
+      outline: none;
+      height: 24px;
+      width: 24px;
+      border-radius: 2px;
+      background-color: var(--accent);
+    }
+  }
+}
+
+.write-section .tags-input .display-tags {
+  width: $form-element-width;
+  margin-top: 0.5rem;
+
+  display: grid;
+  gap: 0.4em;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+
+  .tag {
+    background: var(--card-bg-1);
+    padding: 0.375rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+
+    button {
+      border: none;
+      outline: none;
+      height: 24px;
+      width: 24px;
+      border-radius: 2px;
+      background-color: var(--body-text-1);
+    }
+  }
+}
+
+.write-section .image-input {
+  width: $form-element-width;
+
+  .input {
+    margin-bottom: 0.5rem;
+  }
+
+  .note {
+    font-family: var(--font-body);
+    color: var(--body-text-1);
+    font-size: 17px;
+    line-height: 135%;
+    margin-bottom: 1rem;
+  }
+
+  .display-cover-img img {
+    width: $form-element-width;
+    border-radius: 8px;
+  }
+}
+
+.upload-img {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: $form-element-width;
+  background-color: var(--card-bg-1);
+  border-radius: 4px;
+
+  .link {
+    font-family: var(--font-body);
+    color: var(--body-text-1);
+    font-size: 17px;
+    // flex-grow: 1;
+    width: 65%;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .clipboard-icon {
+    margin-right: 0.5rem;
+
+    svg path {
+      stroke: var(--body-text-1);
+    }
+  }
+}
