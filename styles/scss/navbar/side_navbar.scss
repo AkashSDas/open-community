@@ -84,7 +84,7 @@
   @include navbar-btn(var(--primary), var(--accent));
 }
 
-.navbar .navbar-nav:last-of-type {
+.navbar .push-down {
   margin-top: auto;
   margin-bottom: 0;
 }

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../../lib/context";
 import RoundedButton from "../buttons/rounded_btn";
 import CupSVG from "../svg_icons/cup";
@@ -13,25 +13,26 @@ import SettingsSVG from "../svg_icons/settings";
 import ShoppingCartSVG from "../svg_icons/shopping_cart";
 import UserSVG from "../svg_icons/user";
 import UserPlusSVG from "../svg_icons/user_plus";
-import AuthCheck from "./auth_check";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 class NavbarSectionItem {
   icon: JSX.Element;
   text: string;
-  active: boolean;
+  pathname: string;
   authNeeded: boolean;
   displayItem: boolean;
 
   constructor(
     icon: JSX.Element,
     text: string,
-    active: boolean,
+    pathname: string,
     authNeeded: boolean,
     displayItem: boolean = null
   ) {
     this.icon = icon;
     this.text = text;
-    this.active = active;
+    this.pathname = pathname;
     this.authNeeded = authNeeded;
     this.displayItem = displayItem;
   }
@@ -41,23 +42,23 @@ export function SideNavbar() {
   const { username } = useContext(UserContext);
 
   const section1: NavbarSectionItem[] = [
-    new NavbarSectionItem(<HomeSVG />, "Home", false, false),
-    new NavbarSectionItem(<PresentationSVG />, "Trending", false, false),
-    new NavbarSectionItem(<MenuSVG />, "Topics", false, false),
-    new NavbarSectionItem(<SearchSVG />, "Search", false, false),
-    new NavbarSectionItem(<EditSVG />, "Write", false, false),
-    new NavbarSectionItem(<SavedSVG />, "Bookmark", false, true, true),
+    new NavbarSectionItem(<HomeSVG />, "Home", "/", false),
+    new NavbarSectionItem(<PresentationSVG />, "Trending", "/trending", false),
+    new NavbarSectionItem(<MenuSVG />, "Topics", "/topics", false),
+    new NavbarSectionItem(<SearchSVG />, "Search", "/search", false),
+    new NavbarSectionItem(<EditSVG />, "Write", "/write", false),
+    new NavbarSectionItem(<SavedSVG />, "Bookmark", "/bookmark", true, true),
   ];
 
   const section2: NavbarSectionItem[] = [
-    new NavbarSectionItem(<UserSVG />, "Admin", false, true, true),
-    new NavbarSectionItem(<SettingsSVG />, "Settings", false, true, true),
+    new NavbarSectionItem(<UserSVG />, "Admin", "/admin", true, true),
+    new NavbarSectionItem(<SettingsSVG />, "Settings", "/settings", true, true),
   ];
 
   const section3: NavbarSectionItem[] = [
-    new NavbarSectionItem(<CupSVG />, "Earn", false, false),
-    new NavbarSectionItem(<ShoppingCartSVG />, "Upgrade", false, false),
-    new NavbarSectionItem(<UserPlusSVG />, "Login", false, true, false),
+    new NavbarSectionItem(<CupSVG />, "Earn", "/earn", false),
+    new NavbarSectionItem(<ShoppingCartSVG />, "Upgrade", "/upgrade", false),
+    new NavbarSectionItem(<UserPlusSVG />, "Login", "/login", true, false),
   ];
 
   const navSections: NavbarSectionItem[][] = [section1, section2, section3];
@@ -69,7 +70,7 @@ export function SideNavbar() {
           <NavbarBtn
             icon={navItem.icon}
             text={navItem.text}
-            active={navItem.active}
+            pathname={navItem.pathname}
           />
         </NavItem>
       );
@@ -80,7 +81,7 @@ export function SideNavbar() {
           <NavbarBtn
             icon={navItem.icon}
             text={navItem.text}
-            active={navItem.active}
+            pathname={navItem.pathname}
           />
         </NavItem>
       );
@@ -92,7 +93,7 @@ export function SideNavbar() {
           <NavbarBtn
             icon={navItem.icon}
             text={navItem.text}
-            active={navItem.active}
+            pathname={navItem.pathname}
           />
         </NavItem>
       );
@@ -137,15 +138,17 @@ export function SideNavbar() {
         displayNavSection(key, section)
       )}
 
-      <NavSection>
-        <RoundedButton onClick={() => {}} text="Sign Up" />
-      </NavSection>
+      {username ? null : (
+        <NavSection className="push-down">
+          <RoundedButton onClick={() => {}} text="Sign Up" />
+        </NavSection>
+      )}
     </nav>
   );
 }
 
 function NavSection(props) {
-  return <ul className="navbar-nav">{props.children}</ul>;
+  return <ul className={`navbar-nav ${props.className}`}>{props.children}</ul>;
 }
 
 function NavItem(props) {
@@ -155,13 +158,23 @@ function NavItem(props) {
 function NavbarBtn(props: {
   icon: JSX.Element;
   text: string;
-  active: boolean;
+  pathname: string;
 }) {
+  const router = useRouter();
+  const checkPath = (path: string) => {
+    if (router.pathname === path) return true;
+    return false;
+  };
+
   return (
-    <button className={`navbar-btn${props.active ? "-active" : ""}`}>
-      <span className={`icon`}>{props.icon}</span>
-      <span className={`text`}>{props.text}</span>
-    </button>
+    <Link href={props.pathname}>
+      <button
+        className={`navbar-btn${checkPath(props.pathname) ? "-active" : ""}`}
+      >
+        <span className={`icon`}>{props.icon}</span>
+        <span className={`text`}>{props.text}</span>
+      </button>
+    </Link>
   );
 }
 
