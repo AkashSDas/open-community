@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, firestore } from "./firebase";
 
@@ -26,4 +26,18 @@ export function useUserData() {
   }, [user]);
 
   return { user, username };
+}
+
+/// Resize textarea height dynamically
+export function useResizeTextareaHeight(value: string) {
+  const ref = useRef(null);
+
+  // Whenever the value updates the height will update
+  useEffect(() => {
+    ref.current.style.height = "0px";
+    const scrollHeight = ref.current.scrollHeight;
+    ref.current.style.height = scrollHeight + "px";
+  }, [value]);
+
+  return { ref };
 }
