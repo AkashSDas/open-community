@@ -7,7 +7,7 @@ import { auth, firestore } from "./firebase";
  */
 export function useUserData() {
   const [user, loading, error] = useAuthState(auth);
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState<string>(null);
 
   useEffect(() => {
     // turn off realtime subscription
