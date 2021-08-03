@@ -88,20 +88,26 @@ h4 {
   font-weight: 500; // medium
 }
 
-.body-main {
+@mixin body-intro-text {
+  @include body-font($body-intro);
+  @include font-style-change(1023px, $body-intro-mobile, false, 140%);
+  font-weight: 500; // medium
+}
+
+@mixin body-main-text {
   @include body-font($body-main);
   @include font-style-change(1023px, $body-main-mobile, false, 140%);
 }
 
-.medium-text {
+@mixin medium-text {
   @include body-font($medium-text);
 }
 
-.caption-text {
+@mixin caption-text {
   @include body-font($caption-text);
 }
 
-.small-text {
+@mixin small-text {
   @include body-font($small-text);
 }
 
