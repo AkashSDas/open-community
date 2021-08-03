@@ -1,5 +1,3 @@
-import { SideNavbar } from "../components/common/navbar";
-
 function Index() {
   return (
     <main>
