@@ -11,6 +11,7 @@ export interface IPost {
 
 function Write() {
   const [tags, setTags] = useState<string[]>([]);
+  const [publish, setPublish] = useState(false);
 
   const onSubmit = () => {};
   const initialFormValues: IPost = {
@@ -31,6 +32,8 @@ function Write() {
               handleChange={handleChange}
               tags={tags}
               setTags={setTags}
+              publish={publish}
+              setPublish={setPublish}
             />
           )}
         </Formik>
