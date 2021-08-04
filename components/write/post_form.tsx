@@ -97,20 +97,29 @@ function ContentEditor({
 
   const actionBtnsJsx = () => (
     <div className="action-btns">
-      <button onClick={() => updateEditorMode(0)}>
-        <ShowSVG />
-      </button>
-      <button onClick={() => updateEditorMode(1)}>
+      <button
+        className={`show-btn ${editorMode === 0 ? "active" : "inactive"}`}
+        onClick={() => updateEditorMode(0)}
+      >
         <EditSquareSVG />
       </button>
-      <button onClick={() => updateEditorMode(2)}>
+      <button
+        className={`edit-btn ${editorMode === 1 ? "active" : "inactive"}`}
+        onClick={() => updateEditorMode(1)}
+      >
+        <ShowSVG />
+      </button>
+      <button
+        className={`full-mode-btn ${editorMode === 2 ? "active" : "inactive"}`}
+        onClick={() => updateEditorMode(2)}
+      >
         <FilterSVG />
       </button>
     </div>
   );
 
   return (
-    <div className="content">
+    <div className="content-editor">
       <div className="header">
         <label>Content</label>
         {actionBtnsJsx()}
@@ -133,29 +142,18 @@ function Editor({
   content: string;
   handleChange: ChangeEventHandler<HTMLTextAreaElement>;
 }) {
-  const { ref } = useResizeTextareaHeight(content);
-
   if (editorMode === 0) {
-    return (
-      <textarea
-        ref={ref}
-        className="content"
-        name="content"
-        value={content}
-        onChange={handleChange}
-        placeholder="Start writing your content"
-      />
-    );
+    return <EditorMode0 handleChange={handleChange} content={content} />;
   }
 
   if (editorMode === 1) {
-    return <ReactMarkdown>{content}</ReactMarkdown>;
+    return <ReactMarkdown className="editor-mode-1">{content}</ReactMarkdown>;
   }
 
   return (
-    <section>
+    <section className="full-mode-editor">
       <textarea
-        ref={ref}
+        // ref={ref}
         className="content"
         name="content"
         value={content}
@@ -166,6 +164,23 @@ function Editor({
       <div>
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
+    </section>
+  );
+}
+
+function EditorMode0({ content, handleChange }) {
+  const { ref } = useResizeTextareaHeight(content);
+
+  return (
+    <section className="editor-mode-0">
+      <textarea
+        ref={ref}
+        className="content"
+        name="content"
+        value={content}
+        onChange={handleChange}
+        placeholder="Start writing your content"
+      />
     </section>
   );
 }
