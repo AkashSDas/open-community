@@ -120,7 +120,7 @@ function ContentEditor({
 
   return (
     <div className="content-editor">
-      <div className="header">
+      <div className={`header ${editorMode === 2 ? "full-mode-header" : ""}`}>
         <label>Content</label>
         {actionBtnsJsx()}
       </div>
@@ -150,22 +150,7 @@ function Editor({
     return <ReactMarkdown className="editor-mode-1">{content}</ReactMarkdown>;
   }
 
-  return (
-    <section className="full-mode-editor">
-      <textarea
-        // ref={ref}
-        className="content"
-        name="content"
-        value={content}
-        onChange={handleChange}
-        placeholder="Start writing your content"
-      />
-
-      <div>
-        <ReactMarkdown>{content}</ReactMarkdown>
-      </div>
-    </section>
-  );
+  return <EditorMode2 content={content} handleChange={handleChange} />;
 }
 
 function EditorMode0({ content, handleChange }) {
@@ -181,6 +166,25 @@ function EditorMode0({ content, handleChange }) {
         onChange={handleChange}
         placeholder="Start writing your content"
       />
+    </section>
+  );
+}
+
+function EditorMode2({ content, handleChange }) {
+  const { ref } = useResizeTextareaHeight(content);
+
+  return (
+    <section className="full-mode-editor">
+      <textarea
+        ref={ref}
+        className="content"
+        name="content"
+        value={content}
+        onChange={handleChange}
+        placeholder="Start writing your content"
+      />
+
+      <ReactMarkdown className="preview">{content}</ReactMarkdown>
     </section>
   );
 }
