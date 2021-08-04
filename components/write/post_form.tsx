@@ -13,6 +13,7 @@ import ImageInput from "./image_input";
 import PostTagsInput from "./post_tags_input";
 
 import { useScrollPosition } from "react-use-scroll-position";
+import ChartSVG from "../svg_icons/chart";
 
 interface FormProps {
   values: IPost;
@@ -22,6 +23,9 @@ interface FormProps {
 
   tags: string[];
   setTags: Function;
+
+  publish: boolean;
+  setPublish: Function;
 }
 
 function PostForm({
@@ -30,6 +34,8 @@ function PostForm({
   handleChange,
   tags,
   setTags,
+  publish,
+  setPublish,
 }: FormProps) {
   const { ref: titleTextareaRef } = useResizeTextareaHeight(values.title);
   const { ref: descriptionTextareaRef } = useResizeTextareaHeight(
@@ -45,6 +51,9 @@ function PostForm({
         value={values.title}
         onChange={handleChange}
         placeholder="Title"
+        onKeyPress={(e) => {
+          if (e.key === "Enter") e.preventDefault();
+        }}
       />
       <textarea
         ref={descriptionTextareaRef}
@@ -53,6 +62,9 @@ function PostForm({
         value={values.description}
         onChange={handleChange}
         placeholder="Description"
+        onKeyPress={(e) => {
+          if (e.key === "Enter") e.preventDefault();
+        }}
       />
       <PostTagsInput tags={tags} setTags={setTags} />
       <ImageInput
@@ -63,7 +75,50 @@ function PostForm({
       <UploadImage />
 
       <ContentEditor content={values.content} handleChange={handleChange} />
+
+      <MetaData
+        value={publish}
+        content={values.content}
+        setPublish={setPublish}
+      />
     </form>
+  );
+}
+
+function MetaData({ value, setPublish, content }) {
+  // Naive method to calc word count and read time
+  const wordCount = content.trim().split(/\s+/g).length;
+  const minutesToRead = (wordCount / 100 + 1).toFixed(0);
+
+  const toggleCheckbox = () => {
+    setPublish((publish) => !publish);
+  };
+
+  return (
+    <div className="post-metadata">
+      <div className="post-metadata-item">
+        <input
+          type="checkbox"
+          name="publish"
+          value={value}
+          onChange={toggleCheckbox}
+        />
+        <div
+          className="box"
+          style={{
+            backgroundColor: value ? "yellowgreen" : "var(--red)",
+          }}
+          onClick={toggleCheckbox}
+        ></div>
+        <label>Publish</label>
+      </div>
+      <div className="post-metadata-item">
+        <DocumentSVG /> Read time - {minutesToRead}min
+      </div>
+      <div className="post-metadata-item rotate">
+        <DocumentSVG /> Num of words - {wordCount}
+      </div>
+    </div>
   );
 }
 

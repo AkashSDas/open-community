@@ -323,3 +323,47 @@ $full-mode-editor-width: 100%;
     }
   }
 }
+
+/// MetaData ///
+
+.post-metadata {
+  margin-top: $margin-in-between;
+
+  .post-metadata-item {
+    $margin-between-elements: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    margin-bottom: $margin-between-elements;
+
+    input[type="checkbox"] {
+      position: absolute;
+      left: -100vw;
+    }
+
+    .box {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--red);
+      margin-right: $margin-between-elements;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    svg {
+      margin-right: $margin-between-elements;
+
+      path {
+        stroke: var(--body-text-1);
+      }
+    }
+  }
+
+  .rotate svg {
+    transform: rotate(-90deg);
+  }
+}
