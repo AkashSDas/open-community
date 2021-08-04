@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import { ChangeEventHandler, FormEventHandler } from "react";
 import ReactMarkdown from "react-markdown";
@@ -10,6 +11,8 @@ import FilterSVG from "../svg_icons/fliter";
 import ShowSVG from "../svg_icons/show";
 import ImageInput from "./image_input";
 import PostTagsInput from "./post_tags_input";
+
+import { useScrollPosition } from "react-use-scroll-position";
 
 interface FormProps {
   values: IPost;
@@ -120,15 +123,30 @@ function ContentEditor({
 
   return (
     <div className="content-editor">
-      <div className={`header ${editorMode === 2 ? "full-mode-header" : ""}`}>
-        <label>Content</label>
-        {actionBtnsJsx()}
-      </div>
+      <ContentEditorHeader
+        editorMode={editorMode}
+        actionBtnsJsx={actionBtnsJsx}
+      />
       <Editor
         editorMode={editorMode}
         content={content}
         handleChange={handleChange}
       />
+    </div>
+  );
+}
+
+function ContentEditorHeader({ editorMode, actionBtnsJsx }) {
+  const { y } = useScrollPosition();
+
+  return (
+    <div
+      className={`header ${editorMode === 2 ? "full-mode-header" : ""} ${
+        y >= 450 ? "raise-header" : ""
+      }`}
+    >
+      <label>Content</label>
+      {actionBtnsJsx()}
     </div>
   );
 }
@@ -154,7 +172,7 @@ function Editor({
 }
 
 function EditorMode0({ content, handleChange }) {
-  const { ref } = useResizeTextareaHeight(content);
+  const { ref } = useResizeTextareaHeight(content, true);
 
   return (
     <section className="editor-mode-0">
