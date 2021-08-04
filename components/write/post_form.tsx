@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ChangeEventHandler, FormEventHandler } from "react";
 import ReactMarkdown from "react-markdown";
 import { useResizeTextareaHeight } from "../../lib/hooks";
-import { IPost } from "../../pages/write";
+import { IPost, IPostMetadataThatAuthorCanSet } from "../../pages/write";
 import CameraSVG from "../svg_icons/camera";
 import DocumentSVG from "../svg_icons/document";
 import EditSquareSVG from "../svg_icons/edit_square";
@@ -26,6 +26,9 @@ interface FormProps {
 
   publish: boolean;
   setPublish: Function;
+
+  postMetadata: IPostMetadataThatAuthorCanSet;
+  setPostMetadata: Function;
 }
 
 function TitleTextarea({ value, handleChange }) {
@@ -72,6 +75,8 @@ function PostForm({
   setTags,
   publish,
   setPublish,
+  postMetadata,
+  setPostMetadata,
 }: FormProps) {
   return (
     <form onSubmit={handleSubmit}>
@@ -95,6 +100,8 @@ function PostForm({
         value={publish}
         content={values.content}
         setPublish={setPublish}
+        postMetadata={postMetadata}
+        setPostMetadata={setPostMetadata}
       />
 
       <button className="btn save-btn" type="submit">
@@ -104,10 +111,24 @@ function PostForm({
   );
 }
 
-function MetaData({ value, setPublish, content }) {
+function MetaData({
+  value,
+  setPublish,
+  content,
+  postMetadata,
+  setPostMetadata,
+}) {
   // Naive method to calc word count and read time
-  const wordCount = content.trim().split(/\s+/g).length;
-  const minutesToRead = (wordCount / 100 + 1).toFixed(0);
+  useEffect(() => {
+    const wordCount = content.trim().split(/\s+/g).length;
+    const minutesToRead = parseInt((wordCount / 100 + 1).toFixed(0));
+
+    setPostMetadata({
+      ...postMetadata,
+      numOfWords: wordCount,
+      readTime: minutesToRead,
+    });
+  }, [content]);
 
   const toggleCheckbox = () => {
     setPublish((publish) => !publish);
@@ -132,10 +153,10 @@ function MetaData({ value, setPublish, content }) {
         <label>Publish</label>
       </div>
       <div className="post-metadata-item">
-        <DocumentSVG /> Read time - {minutesToRead}min
+        <DocumentSVG /> Read time - {postMetadata?.readTime}min
       </div>
       <div className="post-metadata-item rotate">
-        <DocumentSVG /> Num of words - {wordCount}
+        <DocumentSVG /> Num of words - {postMetadata?.numOfWords}
       </div>
     </div>
   );
