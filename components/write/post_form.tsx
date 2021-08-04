@@ -81,6 +81,10 @@ function PostForm({
         content={values.content}
         setPublish={setPublish}
       />
+
+      <button className="btn save-btn" type="submit">
+        Save
+      </button>
     </form>
   );
 }

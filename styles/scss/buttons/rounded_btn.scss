@@ -76,3 +76,20 @@
     margin-right: 0.625rem;
   }
 }
+
+.btn {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  background-color: var(--accent);
+  color: var(--primary);
+  border: none;
+  outline: none;
+
+  // width: 204px;
+  width: fit-content;
+  font-weight: 700;
+  font-family: var(--font-head);
+  line-height: 140%;
+  letter-spacing: 0.04em;
+  font-size: 17px;
+}
