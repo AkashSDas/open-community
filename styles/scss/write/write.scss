@@ -279,7 +279,8 @@ $full-mode-editor-width: 100%;
 
 .content-editor .editor-mode-1 {
   width: $form-element-width;
-  padding-top: 2rem;
+  padding: 1rem;
+  background-color: var(--card-bg-1);
 
   @include preview-post-content;
   @include body-main-text;
@@ -301,7 +302,11 @@ $full-mode-editor-width: 100%;
 
   .preview {
     overflow-wrap: break-word;
-    padding: 1.375rem 1rem;
+
+    padding: 1rem;
+    background-color: var(--card-bg-1);
+    border-bottom-right-radius: 8px;
+
     @include preview-post-content;
     @include body-main-text;
   }
@@ -311,6 +316,7 @@ $full-mode-editor-width: 100%;
     border-radius: 8px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     resize: none;
     background-color: var(--card-bg-1);
     padding: 1.375rem 1rem;
@@ -348,6 +354,8 @@ $full-mode-editor-width: 100%;
       border-radius: 4px;
       background: var(--red);
       margin-right: $margin-between-elements;
+
+      $margin-between-elements: 0.5rem;
 
       &:hover {
         cursor: pointer;
