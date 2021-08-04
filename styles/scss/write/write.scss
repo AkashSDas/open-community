@@ -163,6 +163,8 @@ $margin-in-between: 1rem;
 
 /// Content Editor ///
 
+$full-mode-editor-width: 100%;
+
 .content-editor .header {
   display: flex;
   justify-content: space-between;
@@ -222,6 +224,10 @@ $margin-in-between: 1rem;
   }
 }
 
+.content-editor .full-mode-header {
+  width: $full-mode-editor-width !important;
+}
+
 .content-editor .editor-mode-0 {
   .content {
     width: $form-element-width;
@@ -242,12 +248,60 @@ $margin-in-between: 1rem;
   }
 }
 
+@mixin preview-post-content {
+  p {
+    margin: 1rem auto;
+    line-height: 140%;
+  }
+
+  pre {
+    overflow: scroll;
+  }
+}
+
 .content-editor .editor-mode-1 {
   width: $form-element-width;
   padding-top: 2rem;
 
-  p {
-    margin: 1rem auto;
-    line-height: 140%;
+  @include preview-post-content;
+  @include body-main-text;
+}
+
+.content-editor .full-mode-editor {
+  display: flex;
+  justify-content: space-between;
+  // width: $form-element-width;
+
+  textarea,
+  .preview {
+    width: 50%;
+  }
+
+  .editor-mode-1 {
+    padding-top: 1rem;
+  }
+
+  .preview {
+    overflow-wrap: break-word;
+    padding: 1.375rem 1rem;
+    @include preview-post-content;
+    @include body-main-text;
+  }
+
+  .content {
+    border: none;
+    border-radius: 8px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    resize: none;
+    background-color: var(--card-bg-1);
+    padding: 1.375rem 1rem;
+    outline: none;
+
+    @include body-main-text;
+
+    &::placeholder {
+      color: var(--body-text-3);
+    }
   }
 }
