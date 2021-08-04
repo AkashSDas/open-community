@@ -28,6 +28,42 @@ interface FormProps {
   setPublish: Function;
 }
 
+function TitleTextarea({ value, handleChange }) {
+  const { ref } = useResizeTextareaHeight(value);
+
+  return (
+    <textarea
+      ref={ref}
+      className="title"
+      name="title"
+      value={value}
+      onChange={handleChange}
+      placeholder="Title"
+      onKeyPress={(e) => {
+        if (e.key === "Enter") e.preventDefault();
+      }}
+    />
+  );
+}
+
+function DescriptionTextarea({ value, handleChange }) {
+  const { ref } = useResizeTextareaHeight(value);
+
+  return (
+    <textarea
+      ref={ref}
+      className="description"
+      name="description"
+      value={value}
+      onChange={handleChange}
+      placeholder="Description"
+      onKeyPress={(e) => {
+        if (e.key === "Enter") e.preventDefault();
+      }}
+    />
+  );
+}
+
 function PostForm({
   values,
   handleSubmit,
@@ -37,35 +73,14 @@ function PostForm({
   publish,
   setPublish,
 }: FormProps) {
-  const { ref: titleTextareaRef } = useResizeTextareaHeight(values.title);
-  const { ref: descriptionTextareaRef } = useResizeTextareaHeight(
-    values.description
-  );
-
   return (
     <form onSubmit={handleSubmit}>
-      <textarea
-        ref={titleTextareaRef}
-        className="title"
-        name="title"
-        value={values.title}
-        onChange={handleChange}
-        placeholder="Title"
-        onKeyPress={(e) => {
-          if (e.key === "Enter") e.preventDefault();
-        }}
-      />
-      <textarea
-        ref={descriptionTextareaRef}
-        className="description"
-        name="description"
+      <TitleTextarea value={values.title} handleChange={handleChange} />
+      <DescriptionTextarea
         value={values.description}
-        onChange={handleChange}
-        placeholder="Description"
-        onKeyPress={(e) => {
-          if (e.key === "Enter") e.preventDefault();
-        }}
+        handleChange={handleChange}
       />
+
       <PostTagsInput tags={tags} setTags={setTags} />
       <ImageInput
         coverImageURL={values.coverImageURL}
