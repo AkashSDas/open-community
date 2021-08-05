@@ -22,6 +22,7 @@ export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 // Firestore exports
 export const firestore = firebase.firestore();
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+export const fromMillis = firebase.firestore.Timestamp.fromMillis;
 
 /**`
  * Converts a firestore document to JSON
