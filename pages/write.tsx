@@ -79,10 +79,10 @@ function Write() {
 
   return (
     <main>
-      <section>
+      <section className="write-section">
         <Formik initialValues={initialFormValues} onSubmit={onSubmit}>
           {({ values, handleChange, handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
+            <form className="form" onSubmit={handleSubmit}>
               <input
                 type="text"
                 name="title"
@@ -91,7 +91,13 @@ function Write() {
                 placeholder="Enter title for your post"
               />
 
-              <button type="submit">Choose</button>
+              <button
+                className="btn"
+                type="submit"
+                disabled={!(values.title?.length > 0)}
+              >
+                Choose
+              </button>
             </form>
           )}
         </Formik>

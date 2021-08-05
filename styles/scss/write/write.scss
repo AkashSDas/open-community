@@ -1,0 +1,29 @@
+.write-section .form {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    border: none;
+    border-radius: 8px;
+    background-color: var(--card-bg-1);
+    padding: 1.438rem 1rem;
+    outline: none;
+    margin-bottom: 1rem;
+
+    font-size: 23px;
+    color: var(--heading);
+    font-weight: 500;
+    font-family: var(--font-body);
+
+    &::placeholder {
+      color: var(--body-text-3);
+      font-size: 23px;
+      font-weight: 500;
+      font-family: var(--font-body);
+    }
+  }
+
+  button:disabled {
+    filter: brightness(0.8);
+  }
+}
