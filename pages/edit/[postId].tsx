@@ -3,12 +3,12 @@ import { useRouter, withRouter } from "next/router";
 import React, { useState } from "react";
 import { useCallback } from "react";
 import { useEffect } from "react";
-import PostForm from "../components/write/post_form";
 import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
-import { auth, firestore, serverTimestamp } from "../lib/firebase";
-import { IPost, IPostMetadataThatAuthorCanSet } from "./write";
+import PostForm from "../../components/write/post_form";
+import { firestore, serverTimestamp } from "../../lib/firebase";
+import { IPost, IPostMetadataThatAuthorCanSet } from "../write";
 
-function Edit() {
+function EditPost() {
   return <WriteManager />;
 }
 
@@ -126,4 +126,4 @@ function PostEditForm({ postState: { metadata, post, content } }) {
   );
 }
 
-export default Edit;
+export default EditPost;

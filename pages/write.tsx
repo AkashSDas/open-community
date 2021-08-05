@@ -24,7 +24,9 @@ function Write() {
 
   const performRedirect = () => {
     if (redirect.doRedirect) {
-      router.push({ pathname: "/edit", query: { postId: redirect.postDocId } });
+      router.push({
+        pathname: `/edit/${redirect.postDocId}`,
+      });
     }
   };
 
