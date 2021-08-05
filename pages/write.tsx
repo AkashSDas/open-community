@@ -38,8 +38,6 @@ function Write() {
 
     const metadataDoc = firestore.collection("postMetadata").doc();
     const metadataData = {
-      createdAt: serverTimestamp(),
-      lastmodifiedAt: serverTimestamp(),
       hearts: 0,
       numOfWords: 0,
       readTime: 0,
@@ -63,6 +61,8 @@ function Write() {
       metadataId: metadataDoc.id,
       postContentId: postContentDoc.id,
       publish: false,
+      createdAt: serverTimestamp(),
+      lastmodifiedAt: serverTimestamp(),
     };
     batch.set(postDoc, postData);
 

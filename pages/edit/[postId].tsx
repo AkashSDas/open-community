@@ -80,10 +80,10 @@ function PostEditForm({ postState: { metadata, post, content } }) {
       title: values.title,
       description: values.description,
       publish,
+      lastmodifiedAt: serverTimestamp(),
     });
 
     batch.update(metadataRef, {
-      lastmodifiedAt: serverTimestamp(),
       numOfWords: postMetadata.numOfWords,
       readTime: postMetadata.readTime,
       tags,
