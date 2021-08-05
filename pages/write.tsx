@@ -1,6 +1,7 @@
 import { Formik } from "formik";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
+import AdminPostCard from "../components/post_cards/admin_post_card";
 import { auth, firestore, serverTimestamp } from "../lib/firebase";
 
 export interface IPost {
@@ -103,6 +104,8 @@ function Write() {
         </Formik>
         {performRedirect()}
       </section>
+
+      <AdminPostCard />
     </main>
   );
 }
