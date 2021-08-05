@@ -22,3 +22,17 @@ export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 // Firestore exports
 export const firestore = firebase.firestore();
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
+
+/**`
+ * Converts a firestore document to JSON
+ * @param  {DocumentSnapshot} doc
+ */
+export function postToJSON(doc) {
+  const data = doc.data();
+  return {
+    ...data,
+    // Gotcha! firestore timestamp NOT serializable to JSON. Must convert to milliseconds
+    createdAt: data?.createdAt.toMillis() || 0,
+    lastmodifiedAT: data?.lastmodifiedAt.toMillis() || 0,
+  };
+}
