@@ -33,39 +33,45 @@ function AdminPostCard(props) {
     const postsData = await postQuery.get();
     const postList = [];
     let count = 0;
-    postsData.docs.map(async (doc) => {
-      let data = doc.data();
-      console.log(data);
-      // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
-      data = {
-        ...data,
-        createdAt: data?.createdAt?.toMillis() || 0,
-        lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
-      };
 
-      const metadataDoc = firestore.doc(`postMetadata/${data.metadataId}`);
-      const metadataData = (await metadataDoc.get()).data();
+    if (postsData.docs.length !== 0) {
+      postsData.docs.map(async (doc) => {
+        let data = doc.data();
+        console.log(data);
+        // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
+        data = {
+          ...data,
+          createdAt: data?.createdAt?.toMillis() || 0,
+          lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
+        };
 
-      const postData = {
-        id: doc.id,
-        ...data,
-        ...metadataData,
-      };
+        const metadataDoc = firestore.doc(`postMetadata/${data.metadataId}`);
+        const metadataData = (await metadataDoc.get()).data();
 
-      postList.push(postData);
+        const postData = {
+          id: doc.id,
+          ...data,
+          ...metadataData,
+        };
 
-      /// to make setPosts run only when we have iterated through
-      /// entire docs
-      if (count === postsData.docs.length - 1) {
-        setPosts((allPosts) => [...allPosts, ...postList]);
-        setLoading(false);
+        postList.push(postData);
 
-        if (postList.length < LIMIT) setPostsEnd(true);
-        count = 0;
-      } else {
-        count++;
-      }
-    });
+        /// to make setPosts run only when we have iterated through
+        /// entire docs
+        if (count === postsData.docs.length - 1) {
+          setPosts((allPosts) => [...allPosts, ...postList]);
+          setLoading(false);
+
+          if (postsData.docs.length < LIMIT) setPostsEnd(true);
+          count = 0;
+        } else {
+          count++;
+        }
+      });
+    } else {
+      setLoading(false);
+      setPostsEnd(true);
+    }
   };
 
   const getPost = async () => {
@@ -138,6 +144,7 @@ function AdminPostCard(props) {
 
 function Card({ post }) {
   const router = useRouter();
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const convertSecToJsxTime = (time) => {
     const monthNames = [
@@ -161,6 +168,8 @@ function Card({ post }) {
       3
     )}, ${date.getFullYear()}`;
   };
+
+  if (isDeleted) return null;
 
   return (
     <div className="admin-post-card">
@@ -199,7 +208,26 @@ function Card({ post }) {
               </button>
             </span>
             <span>
-              <button>Delete</button>
+              <button
+                onClick={async () => {
+                  const postRef = firestore.doc(`posts/${post.id}`);
+                  const metadataRef = firestore.doc(
+                    `postMetadata/${post.metadataId}`
+                  );
+                  const postContentRef = firestore.doc(
+                    `postContents/${post.postContentId}`
+                  );
+                  const batch = firestore.batch();
+                  batch.delete(postRef);
+                  batch.delete(metadataRef);
+                  batch.delete(postContentRef);
+                  await batch.commit();
+
+                  setIsDeleted(true);
+                }}
+              >
+                Delete
+              </button>
             </span>
           </span>
         </div>
