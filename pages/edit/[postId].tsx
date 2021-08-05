@@ -105,7 +105,7 @@ function PostEditForm({ postState: { metadata, post, content } }) {
 
   return (
     <main>
-      <section className="write-section">
+      <section className="edit-section">
         <Formik onSubmit={onSubmit} initialValues={initialFormValues}>
           {({ values, handleSubmit, handleChange }) => (
             <PostForm

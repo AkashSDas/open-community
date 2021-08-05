@@ -12,7 +12,7 @@ $margin-in-between: 1rem;
   }
 }
 
-.write-section form {
+.edit-section form {
   display: flex;
   flex-direction: column;
 
@@ -38,7 +38,7 @@ $margin-in-between: 1rem;
 
 /// Input Type 1 ///
 
-.write-section .tags-input {
+.edit-section .tags-input {
   margin-bottom: $margin-in-between;
 
   label {
@@ -83,7 +83,7 @@ $margin-in-between: 1rem;
   }
 }
 
-.write-section .tags-input .display-tags {
+.edit-section .tags-input .display-tags {
   width: $form-element-width;
   margin-top: 0.5rem;
 
@@ -110,7 +110,7 @@ $margin-in-between: 1rem;
   }
 }
 
-.write-section .image-input {
+.edit-section .image-input {
   width: $form-element-width;
 
   .input {
@@ -384,6 +384,6 @@ $full-mode-editor-width: 100%;
   }
 }
 
-.write-section .save-btn {
+.edit-section .save-btn {
   width: 212px;
 }
