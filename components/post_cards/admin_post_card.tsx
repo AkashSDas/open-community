@@ -1,15 +1,72 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
-import { auth, firestore, postToJSON } from "../../lib/firebase";
+import { auth, firestore, fromMillis, postToJSON } from "../../lib/firebase";
 import { useUserData } from "../../lib/hooks";
 import ShowSVG from "../svg_icons/show";
 
 // Max post to query per page
-const LIMIT = 10;
+const LIMIT = 1;
 
 function AdminPostCard(props) {
   const { user } = useUserData();
   const [posts, setPosts] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+  const [postsEnd, setPostsEnd] = useState(false);
+
+  const getMorePosts = async () => {
+    setLoading(true);
+    const last = posts[posts.length - 1];
+    const cursor =
+      typeof last.lastmodifiedAt === "number"
+        ? fromMillis(last.lastmodifiedAt)
+        : last.modifiedAt;
+
+    const postQuery = firestore
+      .collection("/posts")
+      .where("authorId", "==", user.uid)
+      .orderBy("lastmodifiedAt", "desc")
+      .startAfter(cursor)
+      .limit(LIMIT);
+
+    const postsData = await postQuery.get();
+    const postList = [];
+    let count = 0;
+    postsData.docs.map(async (doc) => {
+      let data = doc.data();
+      console.log(data);
+      // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
+      data = {
+        ...data,
+        createdAt: data?.createdAt?.toMillis() || 0,
+        lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
+      };
+
+      const metadataDoc = firestore.doc(`postMetadata/${data.metadataId}`);
+      const metadataData = (await metadataDoc.get()).data();
+
+      const postData = {
+        id: doc.id,
+        ...data,
+        ...metadataData,
+      };
+
+      postList.push(postData);
+
+      /// to make setPosts run only when we have iterated through
+      /// entire docs
+      if (count === postsData.docs.length - 1) {
+        setPosts((allPosts) => [...allPosts, ...postList]);
+        setLoading(false);
+
+        if (postList.length < LIMIT) setPostsEnd(true);
+        count = 0;
+      } else {
+        count++;
+      }
+    });
+  };
 
   const getPost = async () => {
     const postQuery = firestore
@@ -35,6 +92,7 @@ function AdminPostCard(props) {
       const metadataData = (await metadataDoc.get()).data();
 
       const postData = {
+        id: doc.id,
         ...data,
         ...metadataData,
       };
@@ -66,11 +124,21 @@ function AdminPostCard(props) {
       <div className="hr"></div>
 
       {posts && posts.map((post, key) => <Card key={key} post={post} />)}
+
+      {posts.length !== 0 && !loading && !postsEnd && (
+        <button onClick={getMorePosts}>Load more</button>
+      )}
+
+      {loading && <div>Loading...</div>}
+
+      {postsEnd && "You have reached the end!"}
     </section>
   );
 }
 
 function Card({ post }) {
+  const router = useRouter();
+
   const convertSecToJsxTime = (time) => {
     const monthNames = [
       "January",
@@ -96,6 +164,10 @@ function Card({ post }) {
 
   return (
     <div className="admin-post-card">
+      {/* <div
+        className="cover-img"
+        style={{ backgroundImage: `url(${post.coverImgURL})` }}
+      ></div> */}
       <img className="cover-img" src={`${post.coverImgURL}`} />
       <div className="info">
         <h4>{post.title}</h4>
@@ -118,7 +190,13 @@ function Card({ post }) {
               </span>
             ) : null}
             <span>
-              <button>Edit</button>
+              <button
+                onClick={() => {
+                  router.push(`/edit/${post.id}`);
+                }}
+              >
+                Edit
+              </button>
             </span>
             <span>
               <button>Delete</button>
