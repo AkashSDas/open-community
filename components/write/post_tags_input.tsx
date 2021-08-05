@@ -23,6 +23,7 @@ function PostTagsInput({
     <span className="tag" key={key}>
       {tag}
       <button
+        type="button"
         onClick={() => {
           setTags(tags.filter((tagText) => tagText !== tag));
         }}
@@ -47,6 +48,7 @@ function PostTagsInput({
               placeholder="Tag name that suits your post"
             />
             <button
+              type="button"
               className="add-btn"
               onClick={() => addTag(values.tagText, resetForm)}
             >
