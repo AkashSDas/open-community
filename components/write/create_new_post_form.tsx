@@ -1,5 +1,6 @@
 import { Formik, FormikHelpers } from "formik";
 import { FormEventHandler } from "react";
+
 import { INewPost } from "../../lib/posts/interfaces";
 
 interface Props {
