@@ -1,15 +1,14 @@
-import { useState } from "react";
 import { Formik } from "formik";
+
 import MultiplySVG from "../svg_icons/multiply";
 import PlusSVG from "../svg_icons/plus";
 
-function PostTagsInput({
-  tags,
-  setTags,
-}: {
+interface Props {
   tags: string[];
   setTags: Function;
-}) {
+}
+
+function PostTagsInput({ tags, setTags }: Props) {
   const onSubmit = (e) => {
     e.preventDefault();
   };
