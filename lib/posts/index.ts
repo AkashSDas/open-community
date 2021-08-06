@@ -1,10 +1,5 @@
 import { FirebaseUser, firestore, serverTimestamp } from "../firebase";
-import {
-  INewPost,
-  IPostContentsDoc,
-  IPostMetadataDoc,
-  IPostsDoc,
-} from "./interfaces";
+import { INewPost, IPostContentsDoc, IPostMetadataDoc, IPostsDoc } from "./interfaces";
 
 export async function createNewPost(values: INewPost, user: FirebaseUser) {
   // Commit both docs together as a batch write.

@@ -1,8 +1,4 @@
-import {
-  FirebaseUser,
-  FirestoreFieldValue,
-  FirestoreTimestamp,
-} from "../firebase";
+import { FirestoreFieldValue, FirestoreTimestamp } from "../firebase";
 
 export interface IPostMetadataDoc {
   tags: string[];
