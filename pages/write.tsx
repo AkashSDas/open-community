@@ -1,11 +1,11 @@
-import { Formik } from "formik";
 import { useRouter } from "next/router";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+
 import AdminPostCard from "../components/post_cards/admin_post_card";
 import CreateNewPostForm from "../components/write/create_new_post_form";
-import { auth, firestore, serverTimestamp } from "../lib/firebase";
 import { useUserData } from "../lib/hooks";
 import { createNewPost } from "../lib/posts";
+import { INewPost } from "../lib/posts/interfaces";
 
 export interface IPost {
   title: string;
@@ -20,13 +20,13 @@ export interface IPostMetadataThatAuthorCanSet {
 }
 
 function Write() {
+  const router = useRouter();
   const { user, username } = useUserData();
 
   const [redirect, setRedirect] = useState({
     doRedirect: false,
     postDocId: null,
   });
-  const router = useRouter();
 
   const performRedirect = () => {
     if (redirect.doRedirect) {
@@ -45,7 +45,7 @@ function Write() {
     });
   };
 
-  const initialFormValues: { title: string } = {
+  const initialFormValues: INewPost = {
     title: "",
   };
 
