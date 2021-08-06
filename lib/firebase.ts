@@ -1,7 +1,8 @@
-import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+
+import firebase from "firebase/app";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -42,3 +43,5 @@ export function postToJSON(doc) {
 export type FirestoreTimestamp = firebase.firestore.Timestamp;
 export type FirestoreFieldValue = firebase.firestore.FieldValue;
 export type FirebaseUser = firebase.User;
+export type FirestoreDocumentData =
+  firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>;
