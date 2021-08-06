@@ -41,3 +41,4 @@ export function postToJSON(doc) {
 // Types
 export type FirestoreTimestamp = firebase.firestore.Timestamp;
 export type FirestoreFieldValue = firebase.firestore.FieldValue;
+export type FirebaseUser = firebase.User;
