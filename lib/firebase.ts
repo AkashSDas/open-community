@@ -37,3 +37,7 @@ export function postToJSON(doc) {
     lastmodifiedAT: data?.lastmodifiedAt.toMillis() || 0,
   };
 }
+
+// Types
+export type FirestoreTimestamp = firebase.firestore.Timestamp;
+export type FirestoreFieldValue = firebase.firestore.FieldValue;
