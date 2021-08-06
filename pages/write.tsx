@@ -7,18 +7,6 @@ import { useUserData } from "../lib/hooks";
 import { createNewPost } from "../lib/posts";
 import { INewPost } from "../lib/posts/interfaces";
 
-export interface IPost {
-  title: string;
-  description: string;
-  coverImageURL: string;
-  content: string;
-}
-
-export interface IPostMetadataThatAuthorCanSet {
-  numOfWords: number;
-  readTime: number;
-}
-
 function Write() {
   const router = useRouter();
   const { user, username } = useUserData();

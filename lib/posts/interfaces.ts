@@ -28,3 +28,30 @@ export interface IPostsDoc {
 export interface INewPost {
   title: string;
 }
+
+// post doc shape while author is updating the post
+export interface IPostsAuthorUpdateDoc {
+  title: string;
+  description: string;
+  coverImgURL: string;
+  lastmodifiedAt: number | FirestoreTimestamp | FirestoreFieldValue;
+  publish: boolean;
+}
+
+// post metadata author update
+export interface IPostMetadataAuthorUpdateDoc {
+  tags: string[];
+  numOfWords: number;
+  readTime: number;
+}
+
+// update post
+export interface IUpdatePost {
+  postId: string;
+  metadataId?: string;
+  contentId?: string;
+
+  post: IPostsAuthorUpdateDoc;
+  metadata: IPostMetadataAuthorUpdateDoc;
+  content: IPostContentsDoc;
+}
