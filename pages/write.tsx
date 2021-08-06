@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import AdminPostCard from "../components/post_cards/admin_post_card";
 import { auth, firestore, serverTimestamp } from "../lib/firebase";
+import { useUserData } from "../lib/hooks";
 
 export interface IPost {
   title: string;
@@ -17,6 +18,8 @@ export interface IPostMetadataThatAuthorCanSet {
 }
 
 function Write() {
+  const { user, username } = useUserData();
+
   const [redirect, setRedirect] = useState({
     doRedirect: false,
     postDocId: null,
@@ -105,7 +108,7 @@ function Write() {
         {performRedirect()}
       </section>
 
-      <AdminPostCard />
+      {user && username && <AdminPostCard />}
     </main>
   );
 }
