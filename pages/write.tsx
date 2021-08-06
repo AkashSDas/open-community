@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import AdminPostCard from "../components/post_cards/admin_post_card";
 import { auth, firestore, serverTimestamp } from "../lib/firebase";
 import { useUserData } from "../lib/hooks";
+import { createNewPost } from "../lib/posts";
 
 export interface IPost {
   title: string;
@@ -35,45 +36,11 @@ function Write() {
   };
 
   const onSubmit = async (values) => {
-    // Commit both docs together as a batch write.
-    const batch = firestore.batch();
-    const authorId = auth.currentUser.uid;
-
-    const metadataDoc = firestore.collection("postMetadata").doc();
-    const metadataData = {
-      hearts: 0,
-      numOfWords: 0,
-      readTime: 0,
-      tags: [],
-      views: 0,
-    };
-    batch.set(metadataDoc, metadataData);
-
-    const postContentDoc = firestore.collection("postContents").doc();
-    const postContentData = {
-      content: "",
-    };
-    batch.set(postContentDoc, postContentData);
-
-    const postDoc = firestore.collection("posts").doc();
-    const postData = {
-      authorId,
-      coverImgURL: "",
-      title: values.title,
-      description: "",
-      metadataId: metadataDoc.id,
-      postContentId: postContentDoc.id,
-      publish: false,
-      createdAt: serverTimestamp(),
-      lastmodifiedAt: serverTimestamp(),
-    };
-    batch.set(postDoc, postData);
-
-    await batch.commit();
+    const { postRef } = await createNewPost(values);
 
     setRedirect({
       doRedirect: true,
-      postDocId: postDoc.id,
+      postDocId: postRef.id,
     });
   };
 
