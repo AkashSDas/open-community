@@ -29,6 +29,6 @@ export interface IPostsDoc {
 }
 
 // values that are needed while creating new post
-export interface INewPostValues {
+export interface INewPost {
   title: string;
 }
