@@ -36,7 +36,7 @@ function Write() {
   };
 
   const onSubmit = async (values) => {
-    const { postRef } = await createNewPost(values);
+    const { postRef } = await createNewPost(values, user);
 
     setRedirect({
       doRedirect: true,
