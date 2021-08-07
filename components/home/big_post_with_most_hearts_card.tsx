@@ -92,10 +92,9 @@ function BigPostWithMostHeartsCard() {
       </div>
 
       <div className="info">
-        <h4>{clipText(mostHeartedPost.post.title, 10)}</h4>
-        <div className="description">
-          {clipText(mostHeartedPost.post.description, 15)}
-        </div>
+        {/* <h4>{clipText(mostHeartedPost.post.title, 10)}</h4> */}
+        <h4>{mostHeartedPost.post.title}</h4>
+        <div className="description">{mostHeartedPost.post.description}</div>
         <div className="author-info">
           <div className="img">
             <img
