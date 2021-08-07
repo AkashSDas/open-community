@@ -73,8 +73,16 @@ function BigPostWithMostHeartsCard() {
   // show loading card animation
   if (!mostHeartedPost) return <div></div>;
 
+  const clipText = (text: string, upto: number) => {
+    let words = text.split(" ");
+    if (words.length > upto) {
+      words = [...words.splice(0, upto), "..."];
+    }
+    return words.join(" ");
+  };
+
   return (
-    <div>
+    <div className="big-post">
       <div className="cover-img">
         <img
           src={mostHeartedPost.post.coverImgURL}
@@ -84,8 +92,10 @@ function BigPostWithMostHeartsCard() {
       </div>
 
       <div className="info">
-        <h4>{mostHeartedPost.post.title}</h4>
-        <div className="description">{mostHeartedPost.post.description}</div>
+        <h4>{clipText(mostHeartedPost.post.title, 10)}</h4>
+        <div className="description">
+          {clipText(mostHeartedPost.post.description, 15)}
+        </div>
         <div className="author-info">
           <div className="img">
             <img
@@ -103,7 +113,7 @@ function BigPostWithMostHeartsCard() {
               </span>
               <span className="space">-</span>
               <span className="views">
-                <ShowSVG /> {mostHeartedPost.post.views}
+                <ShowSVG /> {mostHeartedPost.metadata.views} views
               </span>
             </div>
           </div>
