@@ -6,7 +6,7 @@ function Greeting() {
   const [greeting, setGreeting] = useState(null);
 
   useEffect(() => {
-    if (new Date(Date.now()).getHours() < 12) setGreeting("Good morning");
+    if (new Date(Date.now()).getHours() < 18) setGreeting("Good morning");
   }, []);
 
   const iconJsx = () => {
