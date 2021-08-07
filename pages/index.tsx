@@ -1,16 +1,13 @@
 import Greeting from "../components/common/greeting";
-import { firestore } from "../lib/firebase";
+import BigPostWithMostHeartsCard from "../components/home/big_post_with_most_hearts_card";
 
 function Index() {
   return (
     <main>
       <Greeting />
+      <BigPostWithMostHeartsCard />
     </main>
   );
-}
-
-function getMostHeartedAndViewedPost() {
-  const query = firestore.collection("posts").orderBy("");
 }
 
 export default Index;
