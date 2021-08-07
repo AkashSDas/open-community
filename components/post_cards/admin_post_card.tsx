@@ -44,7 +44,7 @@ function AdminPostCard(props) {
           lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
         };
 
-        const metadataDoc = firestore.doc(`postMetadata/${data.metadataId}`);
+        const metadataDoc = firestore.doc(`postMetadata/${doc.id}`);
         const metadataData = (await metadataDoc.get()).data();
 
         const postData = {
@@ -93,7 +93,7 @@ function AdminPostCard(props) {
         lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
       };
 
-      const metadataDoc = firestore.doc(`postMetadata/${data.metadataId}`);
+      const metadataDoc = firestore.doc(`postMetadata/${doc.id}`);
       const metadataData = (await metadataDoc.get()).data();
 
       const postData = {
