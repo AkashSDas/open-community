@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { auth, firestore, fromMillis, postToJSON } from "../../lib/firebase";
 import { useUserData } from "../../lib/hooks";
 import ShowSVG from "../svg_icons/show";
@@ -37,7 +37,6 @@ function AdminPostCard(props) {
     if (postsData.docs.length !== 0) {
       postsData.docs.map(async (doc) => {
         let data = doc.data();
-        console.log(data);
         // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
         data = {
           ...data,
