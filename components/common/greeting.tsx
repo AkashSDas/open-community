@@ -17,7 +17,7 @@ function Greeting() {
 
   return (
     <section className="datetime-greeting">
-      {iconJsx()} {greeting}
+      {iconJsx()} <h4 className="text">{greeting}</h4>
     </section>
   );
 }
