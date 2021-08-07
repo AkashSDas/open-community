@@ -20,8 +20,6 @@ export interface IPostsDoc {
   createdAt: number | FirestoreTimestamp | FirestoreFieldValue;
   lastmodifiedAt: number | FirestoreTimestamp | FirestoreFieldValue;
   publish: boolean;
-  metadataId: string; // post metadata doc id
-  postContentId: string; // post content doc id
 }
 
 // values that are needed while creating new post

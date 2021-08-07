@@ -5,8 +5,24 @@ export async function createNewPost(values: INewPost, user: FirebaseUser) {
   // Commit both docs together as a batch write.
   const batch = firestore.batch();
 
+  // Post doc
+  const postRef = firestore.collection("/posts").doc();
+  const postData: IPostsDoc = {
+    authorId: user.uid,
+    title: values.title,
+    description: "",
+    coverImgURL: "",
+    createdAt: serverTimestamp(),
+    lastmodifiedAt: serverTimestamp(),
+    publish: false,
+  };
+  batch.set(postRef, postData);
+
+  // metadata and content doc for a post will have same id as
+  // the post
+
   // Post metadata doc
-  const metadataRef = firestore.collection("postMetadata").doc();
+  const metadataRef = firestore.doc(`/postMetadata/${postRef.id}`);
   const metadataData: IPostMetadataDoc = {
     tags: [],
     numOfWords: 0,
@@ -17,26 +33,11 @@ export async function createNewPost(values: INewPost, user: FirebaseUser) {
   batch.set(metadataRef, metadataData);
 
   // Post content doc
-  const postContentRef = firestore.collection("postContents").doc();
+  const postContentRef = firestore.doc(`/postContents/${postRef.id}`);
   const postContentData: IPostContentsDoc = {
     content: "",
   };
   batch.set(postContentRef, postContentData);
-
-  // Post doc
-  const postRef = firestore.collection("posts").doc();
-  const postData: IPostsDoc = {
-    authorId: user.uid,
-    title: values.title,
-    description: "",
-    coverImgURL: "",
-    createdAt: serverTimestamp(),
-    lastmodifiedAt: serverTimestamp(),
-    publish: false,
-    metadataId: metadataRef.id,
-    postContentId: postContentRef.id,
-  };
-  batch.set(postRef, postData);
 
   await batch.commit();
 
