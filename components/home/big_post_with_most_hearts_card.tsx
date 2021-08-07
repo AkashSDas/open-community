@@ -16,7 +16,7 @@ function BigPostWithMostHeartsCard() {
   const getMostHeartedPost = async () => {
     const metadataQuery = firestore
       .collection("postMetadata")
-      .orderBy("hearts")
+      .orderBy("hearts", "desc")
       .limit(1);
 
     const metadataDoc = (await metadataQuery.get()).docs[0];
