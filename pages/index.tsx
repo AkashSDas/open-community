@@ -4,9 +4,169 @@ import Greeting from "../components/common/greeting";
 import BigPostWithMostHeartsCard from "../components/home/big_post_with_most_hearts_card";
 import LogoSVG from "../components/svg_icons/logo";
 import ShowSVG from "../components/svg_icons/show";
-import { firestore } from "../lib/firebase";
+import { firestore, fromMillis } from "../lib/firebase";
+import { convertSecToJsxTime } from "../lib/utils";
 
 function Index() {
+  return (
+    <main className="home">
+      <Greeting />
+      <HomePageTopSection />
+      <hr />
+      <TrendingSection />
+      <hr />
+      <PostListView />
+    </main>
+  );
+}
+
+function PostListView() {
+  const [posts, setPosts] = useState([]);
+  const LIMIT = 2;
+
+  const [loading, setLoading] = useState(false);
+  const [postsEnd, setPostsEnd] = useState(false);
+
+  const getMorePosts = async () => {
+    setLoading(true);
+    const last = posts[posts.length - 1];
+    const cursor =
+      typeof last.lastmodifiedAt === "number"
+        ? fromMillis(last.lastmodifiedAt)
+        : last.modifiedAt;
+
+    const postQuery = firestore
+      .collection("/posts")
+      .orderBy("lastmodifiedAt", "desc")
+      .startAfter(cursor)
+      .limit(LIMIT);
+
+    const postsData = await postQuery.get();
+    const postList = [];
+    let count = 0;
+
+    if (postsData.docs.length !== 0) {
+      postsData.docs.map(async (doc) => {
+        let data = doc.data();
+        // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
+        data = {
+          ...data,
+          createdAt: data?.createdAt?.toMillis() || 0,
+          lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
+        };
+
+        const metadataDoc = firestore.doc(`postMetadata/${doc.id}`);
+        const metadataData = (await metadataDoc.get()).data();
+
+        const postData = {
+          id: doc.id,
+          ...data,
+          ...metadataData,
+        };
+
+        postList.push(postData);
+
+        /// to make setPosts run only when we have iterated through
+        /// entire docs
+        if (count === postsData.docs.length - 1) {
+          setPosts((allPosts) => [...allPosts, ...postList]);
+          setLoading(false);
+
+          if (postsData.docs.length < LIMIT) setPostsEnd(true);
+          count = 0;
+        } else {
+          count++;
+        }
+      });
+    } else {
+      setLoading(false);
+      setPostsEnd(true);
+    }
+  };
+
+  const getPost = async () => {
+    const postQuery = firestore
+      .collection("/posts")
+      .orderBy("lastmodifiedAt", "desc")
+      .limit(LIMIT);
+
+    const postsData = await postQuery.get();
+    const postList = [];
+    let count = 0;
+    postsData.docs.map(async (doc) => {
+      let data = doc.data();
+      // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
+      data = {
+        ...data,
+        createdAt: data?.createdAt?.toMillis() || 0,
+        lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
+      };
+
+      const metadataDoc = firestore.doc(`postMetadata/${doc.id}`);
+      const metadataData = (await metadataDoc.get()).data();
+
+      const postData = {
+        id: doc.id,
+        ...data,
+        ...metadataData,
+      };
+
+      postList.push(postData);
+
+      /// to make setPosts run only when we have iterated through
+      /// entire docs
+      if (count === postsData.docs.length - 1) {
+        setPosts(postList);
+        count = 0;
+      } else {
+        count++;
+      }
+    });
+  };
+
+  useEffect(() => {
+    (async () => await getPost())();
+  }, []);
+
+  return (
+    <section className="post-listview">
+      {posts && posts.map((post, key) => <PostCard key={key} post={post} />)}
+
+      {posts.length !== 0 && !loading && !postsEnd && (
+        <button onClick={getMorePosts}>Load more</button>
+      )}
+
+      {loading && <div>Loading...</div>}
+
+      {postsEnd && "You have reached the end!"}
+    </section>
+  );
+}
+
+function PostCard({ post }) {
+  return (
+    <div className="post-card">
+      <img className="cover-img" src={`${post.coverImgURL}`} />
+      <div className="info">
+        <h4>{post.title}</h4>
+        <div className="description">{post.description}</div>
+        <div className="other-info">
+          <span>
+            <span>{convertSecToJsxTime(post.lastmodifiedAt)}</span>
+            <span className="space">-</span>
+            <span className="views">
+              <ShowSVG /> {post.views} views
+            </span>
+            <span className="space">-</span>
+            <div className="read-time">{post.readTime}min read</div>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TrendingSection() {
   const [trendingPosts, setTrendingPosts] = useState(null);
 
   const getTrendingPosts = async (top: number) => {
@@ -50,63 +210,35 @@ function Index() {
     getTrendingPosts(5);
   }, []);
 
-  const convertSecToJsxTime = (time) => {
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    const date = new Date(time);
-    return `${date.getDay()} ${monthNames[date.getMonth()].slice(
-      0,
-      3
-    )}, ${date.getFullYear()}`;
-  };
-
   return (
-    <main className="home">
-      <Greeting />
-      <HomePageTopSection />
-      <hr />
-      <section className="trending-section">
-        <h4>Trending on Open Community</h4>
+    <section className="trending-section">
+      <h4>Trending on Open Community</h4>
 
-        {trendingPosts && (
-          <div className="posts">
-            {trendingPosts.map((post, key: number) => (
-              <div key={key} className="trending-post-card">
-                <div className="number">0{key + 1}</div>
-                <div className="info">
-                  <div className="author-info">
-                    <img
-                      src={`${post.author.photoURL}`}
-                      alt={`${post.author.username}`}
-                    />
-                    <div className="username">{post.author.username}</div>
-                  </div>
-                  <div className="title">{post.post.title}</div>
-                  <div className="description">{post.post.description}</div>
-                  <div className="metadata">
-                    {convertSecToJsxTime(post.post.lastmodifiedAt)} -{" "}
-                    <ShowSVG /> {post.metadata.views} views
-                  </div>
+      {trendingPosts && (
+        <div className="posts">
+          {trendingPosts.map((post, key: number) => (
+            <div key={key} className="trending-post-card">
+              <div className="number">0{key + 1}</div>
+              <div className="info">
+                <div className="author-info">
+                  <img
+                    src={`${post.author.photoURL}`}
+                    alt={`${post.author.username}`}
+                  />
+                  <div className="username">{post.author.username}</div>
+                </div>
+                <div className="title">{post.post.title}</div>
+                <div className="metadata">
+                  {convertSecToJsxTime(post.post.lastmodifiedAt)}
+                  <span className="space">-</span>
+                  <ShowSVG /> {post.metadata.views} views
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </section>
-    </main>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
