@@ -24,16 +24,11 @@ function EditPost() {
     if (router.query?.postId) {
       const postDocRef = firestore.doc(`posts/${router.query.postId}`);
       const post = await postDocRef.get();
-      const postData = post.data();
 
-      const metadataDocRef = firestore.doc(
-        `postMetadata/${postData.metadataId}`
-      );
+      const metadataDocRef = firestore.doc(`postMetadata/${postDocRef.id}`);
       const metadata = await metadataDocRef.get();
 
-      const postContentRef = firestore.doc(
-        `postContents/${postData.postContentId}`
-      );
+      const postContentRef = firestore.doc(`postContents/${postDocRef.id}`);
       const postContent = await postContentRef.get();
 
       setPostState({
