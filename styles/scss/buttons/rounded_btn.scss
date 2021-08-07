@@ -93,3 +93,15 @@
   letter-spacing: 0.04em;
   font-size: 17px;
 }
+
+.tag-btn {
+  outline: none;
+  border: none;
+  background-color: var(--light-blue);
+  color: var(--accent);
+  padding: 0.625rem 0.375rem;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  letter-spacing: 4%;
+  font-size: 15px; // 20px
+}
