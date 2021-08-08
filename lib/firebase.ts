@@ -45,3 +45,16 @@ export type FirestoreFieldValue = firebase.firestore.FieldValue;
 export type FirebaseUser = firebase.User;
 export type FirestoreDocumentData =
   firebase.firestore.DocumentSnapshot<firebase.firestore.DocumentData>;
+
+export function serializePostDocData(doc: FirestoreDocumentData): {
+  [key: string]: any;
+} {
+  const data = doc.data();
+  return {
+    ...data,
+
+    // Firestore timestamp NOT serializable to JSON. Must convert to milliseconds
+    createdAt: data?.createdAt.toMillis() || 0,
+    lastmodifiedAt: data?.lastmodifiedAt.toMillis() || 0,
+  };
+}
