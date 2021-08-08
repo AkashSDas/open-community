@@ -1,12 +1,11 @@
-import { setNestedObjectValues } from "formik";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Greeting from "../components/common/greeting";
 import BigPostWithMostHeartsCard from "../components/home/big_post_with_most_hearts_card";
 import LogoSVG from "../components/svg_icons/logo";
 import ShowSVG from "../components/svg_icons/show";
-import { auth, firestore, fromMillis } from "../lib/firebase";
-import { useUserData } from "../lib/hooks";
+import { firestore, fromMillis } from "../lib/firebase";
+import { useUserData } from "../lib/hooks/user";
 import { convertSecToJsxTime } from "../lib/utils";
 
 function Index() {
