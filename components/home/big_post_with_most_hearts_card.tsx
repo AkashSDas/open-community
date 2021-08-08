@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-
-import { firestore } from "../../lib/firebase";
+import { useMostHeartedPostDataOnce } from "../../lib/hooks/posts/most_hearted_post";
+import { convertSecToJsxTime } from "../../lib/utils";
 import ShowSVG from "../svg_icons/show";
 
 interface State {
@@ -11,108 +10,33 @@ interface State {
 }
 
 function BigPostWithMostHeartsCard() {
-  const [mostHeartedPost, setMostHeatedPost] = useState<State>(null);
+  const { data, loading, error } = useMostHeartedPostDataOnce();
 
-  const getMostHeartedPost = async () => {
-    const metadataQuery = firestore
-      .collection("postMetadata")
-      .orderBy("hearts", "desc")
-      .limit(1);
+  if (loading || error || data === null) return <div>Loading...</div>;
 
-    const metadataDoc = (await metadataQuery.get()).docs[0];
-
-    const postQuery = firestore.doc(`/posts/${metadataDoc.id}`);
-    const postDoc = await postQuery.get();
-    let post = postDoc.data();
-
-    // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
-    post = {
-      ...post,
-      createdAt: post?.createdAt?.toMillis() || 0,
-      lastmodifiedAt: post?.lastmodifiedAt?.toMillis() || 0,
-    };
-
-    const authorQuery = firestore.doc(`/users/${post.authorId}`);
-    const authorDoc = await authorQuery.get();
-
-    setMostHeatedPost({
-      metadata: metadataDoc.data(),
-      post,
-      id: postDoc.id,
-      authorInfo: authorDoc.data(),
-    });
-  };
-
-  useEffect(() => {
-    getMostHeartedPost();
-  }, []);
-
-  const convertSecToJsxTime = (time) => {
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    const date = new Date(time);
-    return `${date.getDay()} ${monthNames[date.getMonth()].slice(
-      0,
-      3
-    )}, ${date.getFullYear()}`;
-  };
-
-  // show loading card animation
-  if (!mostHeartedPost) return <div></div>;
-
-  const clipText = (text: string, upto: number) => {
-    let words = text.split(" ");
-    if (words.length > upto) {
-      words = [...words.splice(0, upto), "..."];
-    }
-    return words.join(" ");
-  };
+  const { post, metadata, author } = data;
 
   return (
     <div className="big-post">
       <div className="cover-img">
-        <img
-          src={mostHeartedPost.post.coverImgURL}
-          alt={mostHeartedPost.post.title}
-        />
-        <div className="read-time">{mostHeartedPost.metadata.readTime} min</div>
+        <img src={post.coverImgURL} alt={post.title} />
+        <div className="read-time">{metadata.readTime} min</div>
       </div>
 
       <div className="info">
-        {/* <h4>{clipText(mostHeartedPost.post.title, 10)}</h4> */}
-        <h4>{mostHeartedPost.post.title}</h4>
-        <div className="description">{mostHeartedPost.post.description}</div>
+        <h4>{post.title}</h4>
+        <div className="description">{post.description}</div>
         <div className="author-info">
           <div className="img">
-            <img
-              src={mostHeartedPost.authorInfo.photoURL}
-              alt={mostHeartedPost.authorInfo.username}
-            />
+            <img src={author.photoURL} alt={author.username} />
           </div>
           <div className="info">
-            <div className="author-name">
-              {mostHeartedPost.authorInfo.username}
-            </div>
+            <div className="author-name">{author.username}</div>
             <div className="post-info">
-              <span>
-                {convertSecToJsxTime(mostHeartedPost.post.lastmodifiedAt)}
-              </span>
+              <span>{convertSecToJsxTime(post.lastmodifiedAt)}</span>
               <span className="space">-</span>
               <span className="views">
-                <ShowSVG /> {mostHeartedPost.metadata.views} views
+                <ShowSVG /> {metadata.views} views
               </span>
             </div>
           </div>
