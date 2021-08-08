@@ -240,7 +240,44 @@
 }
 
 .postlist-and-aside {
-  display: grid;
-  grid-template-columns: 65% 35%;
-  gap: 1rem;
+  display: flex;
+
+  aside {
+    width: 300px;
+    margin-left: 1rem;
+  }
+
+  .post-listview {
+    width: auto;
+  }
+
+  @media only screen and (max-width: 900px) {
+    flex-direction: column;
+
+    aside {
+      width: auto;
+      margin-left: 0;
+    }
+  }
+
+  // display: grid;
+  // // grid-template-columns: 65% 35%;
+  // grid-template-areas: "a b";
+  // grid-template-columns: auto 300px;
+
+  // @media only screen and (max-width: 900px) {
+  //   // grid-template-areas: "a" "b";
+  //   grid-template-areas: unset;
+  //   grid-template-rows: 1fr 1fr;
+  // }
+
+  // gap: 1rem;
+
+  // .aside-posts {
+  //   grid-area: b;
+  // }
+
+  // .post-listview {
+  //   grid-area: a;
+  // }
 }
