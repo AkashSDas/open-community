@@ -1,6 +1,5 @@
 import { useMostHeartedPostDataOnce } from "../../lib/hooks/posts/most_hearted_post";
 import { convertSecToJsxTime } from "../../lib/utils";
-import ShowSVG from "../svg_icons/show";
 
 function BigPostWithMostHeartsCard() {
   const { data, loading, error } = useMostHeartedPostDataOnce();
@@ -16,34 +15,34 @@ function BigPostWithMostHeartsCard() {
         alt={post.title}
         readTime={metadata.readTime}
       />
-    </div>
-    // <div className="big-post">
-    //   <div className="cover-img">
-    //     <img src={post.coverImgURL} alt={post.title} />
-    //     <div className="read-time">{metadata.readTime} min</div>
-    //   </div>
 
-    //   <div className="info">
-    //     <h4>{post.title}</h4>
-    //     <div className="description">{post.description}</div>
-    //     <div className="author-info">
-    //       <div className="img">
-    //         <img src={author.photoURL} alt={author.username} />
-    //       </div>
-    //       <div className="info">
-    //         <div className="author-name">{author.username}</div>
-    //         <div className="post-info">
-    //           <span>{convertSecToJsxTime(post.lastmodifiedAt)}</span>
-    //           <span className="space">-</span>
-    //           <span className="views">
-    //             <ShowSVG /> {metadata.views} views
-    //           </span>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
+      <div className="info">
+        <h4>{post.title}</h4>
+        <div className="description">{post.description}</div>
+        <div className="metadata">
+          <ProfilePic1 url={author.photoURL} alt={author.username} />
+
+          <div>
+            <div>{author.username}</div>
+            <div>
+              <span>{convertSecToJsxTime(post.lastmodifiedAt)}</span>
+              <span className="space">-</span>
+              <span>{metadata.views} views</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
+}
+
+interface ProfilePic1Props {
+  url: string;
+  alt: string;
+}
+
+function ProfilePic1({ url, alt }: ProfilePic1Props) {
+  return <img src={`${url}`} alt={`${alt}`} className="profile-pic-1" />;
 }
 
 interface PostCoverImageProps {

@@ -151,7 +151,7 @@
     font-size: 17px;
     margin-bottom: 0.5rem;
     color: var(--heading);
-    @include line-clamp;
+    @include line-clamp(2);
   }
 
   .metadata {
@@ -194,13 +194,13 @@
     width: 100%;
 
     h4 {
-      @include line-clamp;
+      @include line-clamp(2);
     }
 
     .description {
       margin: 0.5rem auto;
 
-      @include line-clamp;
+      @include line-clamp(2);
       @include medium-text;
     }
 
