@@ -1,0 +1,68 @@
+.aside-posts .aside-post-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  .cover-img {
+    height: 11.875rem;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 17px;
+    font-family: var(--font-head);
+    color: var(--heading);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+
+  .author-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    img {
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      margin-right: 1rem;
+    }
+
+    .username {
+      @include caption-text;
+    }
+  }
+
+  .other-info {
+    display: flex;
+    align-items: center;
+    @include caption-text;
+
+    .space {
+      margin: auto 0.5rem;
+    }
+
+    .views {
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-right: 0.5rem;
+      }
+
+      svg path {
+        stroke: var(--body-text-1);
+      }
+    }
+  }
+}

@@ -28,10 +28,164 @@ function Index() {
 function AsideSection() {
   return (
     <aside>
-      <div>
-        <AuthorToFollow />
-      </div>
+      <AuthorToFollow />
+      <hr />
+      <MorePosts />
     </aside>
+  );
+}
+
+function MorePosts() {
+  const [posts, setPosts] = useState([]);
+  const LIMIT = 2;
+
+  const [loading, setLoading] = useState(false);
+  const [postsEnd, setPostsEnd] = useState(false);
+
+  const getMorePosts = async () => {
+    setLoading(true);
+    const last = posts[posts.length - 1];
+    const cursor =
+      typeof last.lastmodifiedAt === "number"
+        ? fromMillis(last.lastmodifiedAt)
+        : last.modifiedAt;
+
+    const postQuery = firestore
+      .collection("/posts")
+      .orderBy("lastmodifiedAt", "desc")
+      .startAfter(cursor)
+      .limit(LIMIT);
+
+    const postsData = await postQuery.get();
+    const postList = [];
+    let count = 0;
+
+    if (postsData.docs.length !== 0) {
+      postsData.docs.map(async (doc) => {
+        let data = doc.data();
+        // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
+        data = {
+          ...data,
+          createdAt: data?.createdAt?.toMillis() || 0,
+          lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
+        };
+
+        const metadataDoc = firestore.doc(`postMetadata/${doc.id}`);
+        const metadataData = (await metadataDoc.get()).data();
+
+        const authorQuery = firestore.doc(`/users/${data.authorId}`);
+        const authorData = (await authorQuery.get()).data();
+
+        const postData = {
+          id: doc.id,
+          ...data,
+          ...metadataData,
+          author: authorData,
+        };
+
+        postList.push(postData);
+
+        /// to make setPosts run only when we have iterated through
+        /// entire docs
+        if (count === postsData.docs.length - 1) {
+          setPosts((allPosts) => [...allPosts, ...postList]);
+          setLoading(false);
+
+          if (postsData.docs.length < LIMIT) setPostsEnd(true);
+          count = 0;
+        } else {
+          count++;
+        }
+      });
+    } else {
+      setLoading(false);
+      setPostsEnd(true);
+    }
+  };
+
+  const getPost = async () => {
+    const postQuery = firestore
+      .collection("/posts")
+      .orderBy("lastmodifiedAt", "desc")
+      .limit(LIMIT);
+
+    const postsData = await postQuery.get();
+    const postList = [];
+    let count = 0;
+    postsData.docs.map(async (doc) => {
+      let data = doc.data();
+      // firestore timestamp NOT serializable to JSON. Must convert to milliseconds
+      data = {
+        ...data,
+        createdAt: data?.createdAt?.toMillis() || 0,
+        lastmodifiedAt: data?.lastmodifiedAt?.toMillis() || 0,
+      };
+
+      const metadataDoc = firestore.doc(`postMetadata/${doc.id}`);
+      const metadataData = (await metadataDoc.get()).data();
+
+      const authorQuery = firestore.doc(`/users/${data.authorId}`);
+      const authorData = (await authorQuery.get()).data();
+
+      const postData = {
+        id: doc.id,
+        ...data,
+        ...metadataData,
+        author: authorData,
+      };
+
+      postList.push(postData);
+
+      /// to make setPosts run only when we have iterated through
+      /// entire docs
+      if (count === postsData.docs.length - 1) {
+        setPosts(postList);
+        count = 0;
+      } else {
+        count++;
+      }
+    });
+  };
+
+  useEffect(() => {
+    (async () => await getPost())();
+  }, []);
+
+  return (
+    <section className="aside-posts">
+      {posts &&
+        posts.map((post, key) => <AsidePostCard key={key} post={post} />)}
+
+      {posts.length !== 0 && !loading && !postsEnd && (
+        <button onClick={getMorePosts}>Load more</button>
+      )}
+
+      {loading && <div>Loading...</div>}
+
+      {postsEnd && "You have reached the end!"}
+    </section>
+  );
+}
+
+function AsidePostCard({ post }) {
+  return (
+    <div className="aside-post-card">
+      <img className="cover-img" src={`${post.coverImgURL}`} />
+      <div className="author-info">
+        <img src={`${post.author.photoURL}`} alt={`${post.author.username}`} />
+        <div className="username">{post.author.username}</div>
+      </div>
+      <div className="title">{post.title}</div>
+      <div className="other-info">
+        <span>{convertSecToJsxTime(post.lastmodifiedAt)}</span>
+        <span className="space">-</span>
+        <span className="views">
+          <ShowSVG /> {post.views}views
+        </span>
+        <span className="space">-</span>
+        <div className="read-time">{post.readTime}min read</div>
+      </div>
+    </div>
   );
 }
 
