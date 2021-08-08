@@ -103,8 +103,16 @@ h4 {
   @include body-font($medium-text);
 }
 
-@mixin caption-text {
-  @include body-font($caption-text);
+@mixin caption-text($color: null, $line-height: null) {
+  @if ($color and $line-height) {
+    @include body-font($caption-text, $line-height, $color);
+  } @else if ($color) {
+    @include body-font($caption-text, $color: $color);
+  } @else if ($line-height) {
+    @include body-font($caption-text, $line-height: $line-height);
+  } @else {
+    @include body-font($caption-text);
+  }
 }
 
 @mixin small-text {

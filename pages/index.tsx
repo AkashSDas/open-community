@@ -14,11 +14,11 @@ function Index() {
       <Greeting />
       <HomePageTopSection />
       <hr />
-      <TrendingSection />
+      {/* <TrendingSection /> */}
       <hr />
       <div className="postlist-and-aside">
-        <PostListView />
-        <AsideSection />
+        {/* <PostListView /> */}
+        {/* <AsideSection /> */}
       </div>
     </main>
   );
