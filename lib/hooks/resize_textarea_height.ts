@@ -1,33 +1,3 @@
-import { MutableRefObject, useEffect, useRef, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, firestore } from "./firebase";
-
-/**
- * Custom hook to read auth record and user profile doc
- */
-export function useUserData() {
-  const [user, loading, error] = useAuthState(auth);
-  const [username, setUsername] = useState<string>(null);
-
-  useEffect(() => {
-    // turn off realtime subscription
-    let unsubscribe;
-
-    if (user) {
-      const ref = firestore.collection("users").doc(user.uid);
-      unsubscribe = ref.onSnapshot((doc) => {
-        setUsername(doc.data()?.username);
-      });
-    } else {
-      setUsername(null);
-    }
-
-    return unsubscribe;
-  }, [user]);
-
-  return { user, username };
-}
-
 /// Resize textarea height dynamically
 ///
 /// NOTE: If you've a case where your textarea is mounting & unmounting
@@ -39,6 +9,9 @@ export function useUserData() {
 /// the textarea is unmounted (not the top component where this hook is defined)
 /// and then mounted again, now the height will be default textarea height and
 /// this might not fit your content and then you've to scroll.
+
+import { useEffect, useRef } from "react";
+
 /// Similar situation was faced in `editor-mode-0` in post_form.tsx
 export function useResizeTextareaHeight(
   value: string,
