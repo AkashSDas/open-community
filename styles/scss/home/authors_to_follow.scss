@@ -1,0 +1,61 @@
+.authors-to-follow {
+  .heading {
+    text-transform: uppercase;
+    letter-spacing: 4%;
+    @include medium-text;
+
+    margin-bottom: 2rem;
+  }
+}
+
+.authors-to-follow .author-card {
+  display: flex;
+  margin-bottom: 1rem;
+
+  img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 1rem;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+
+    .username {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 4%;
+      margin-bottom: 0.5rem;
+      color: var(--heading);
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .status {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 15px;
+      margin-bottom: 0.5rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .follow-btn {
+      outline: none;
+      border: none;
+      border-radius: 36px;
+      background-color: var(--light-blue);
+      color: var(--accent);
+      padding: 0.813rem 1rem;
+      width: fit-content;
+      font-family: var(--font-head);
+    }
+  }
+}

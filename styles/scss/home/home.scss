@@ -238,3 +238,8 @@
     }
   }
 }
+
+.postlist-and-aside {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}

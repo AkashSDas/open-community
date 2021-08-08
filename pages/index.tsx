@@ -15,8 +15,95 @@ function Index() {
       <hr />
       <TrendingSection />
       <hr />
-      <PostListView />
+      <div className="postlist-and-aside">
+        <PostListView />
+        <AsideSection />
+      </div>
     </main>
+  );
+}
+
+function AsideSection() {
+  return (
+    <aside>
+      <div>
+        <AuthorToFollow />
+      </div>
+    </aside>
+  );
+}
+
+function AuthorToFollow() {
+  // Currently the way author info is fetched, there are same authors
+  // appearing (since they are retrived on the basis of trending posts
+  // and 1 author may have many posts that are trending, so this leads
+  // to displaying same author multiple times)
+
+  const [trendingPosts, setTrendingPosts] = useState(null);
+
+  const getTrendingPosts = async (top: number) => {
+    const query = firestore
+      .collection("postMetadata")
+      .orderBy("views", "desc")
+      .limit(top);
+
+    const metadata = (await query.get()).docs.map((doc) => {
+      return {
+        id: doc.id,
+        data: doc.data(),
+      };
+    });
+
+    const posts = [];
+    for await (const obj of metadata) {
+      const postQuery = firestore.doc(`/posts/${obj.id}`);
+      let postData = (await postQuery.get()).data();
+      postData = {
+        ...postData,
+        createdAt: postData?.createdAt?.toMillis() || 0,
+        lastmodifiedAt: postData?.lastmodifiedAt?.toMillis() || 0,
+      };
+
+      const authorQuery = firestore.doc(`/users/${postData.authorId}`);
+      const authorDoc = await authorQuery.get();
+
+      posts.push({
+        id: obj.id,
+        metadata: obj.data,
+        post: postData,
+        author: authorDoc.data(),
+      });
+    }
+
+    setTrendingPosts(posts);
+  };
+
+  useEffect(() => {
+    getTrendingPosts(5);
+  }, []);
+
+  return (
+    <div className="authors-to-follow">
+      <div className="heading">Authors to follow</div>
+
+      {trendingPosts &&
+        trendingPosts.map((post, key: number) => (
+          <div className="author-card">
+            <img
+              src={`${post.author.photoURL}`}
+              alt={`${post.author.username}`}
+            />
+
+            <div className="info">
+              <div className="username">{post.author.username}</div>
+              {post.author.status && (
+                <div className="status">{post.author.status}</div>
+              )}
+              <button className="follow-btn">Follow</button>
+            </div>
+          </div>
+        ))}
+    </div>
   );
 }
 
