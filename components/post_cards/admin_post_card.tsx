@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { auth, firestore, fromMillis, postToJSON } from "../../lib/firebase";
-import { useUserData } from "../../lib/hooks";
+import { useUserData } from "../../lib/hooks/user";
 import ShowSVG from "../svg_icons/show";
 
 // Max post to query per page

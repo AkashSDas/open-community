@@ -1,6 +1,6 @@
 import { ChangeEventHandler } from "react";
 
-import { useResizeTextareaHeight } from "../../../lib/hooks";
+import { useResizeTextareaHeight } from "../../../lib/hooks/resize_textarea_height";
 
 interface Props {
   content: string;

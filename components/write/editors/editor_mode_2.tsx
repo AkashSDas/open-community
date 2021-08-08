@@ -1,7 +1,7 @@
 import { ChangeEventHandler } from "react";
 import ReactMarkdown from "react-markdown";
 
-import { useResizeTextareaHeight } from "../../../lib/hooks";
+import { useResizeTextareaHeight } from "../../../lib/hooks/resize_textarea_height";
 
 interface Props {
   content: string;
