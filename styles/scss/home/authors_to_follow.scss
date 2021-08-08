@@ -57,5 +57,10 @@
       width: fit-content;
       font-family: var(--font-head);
     }
+
+    .following {
+      background-color: var(--card-bg-1);
+      color: var(--body-text-1);
+    }
   }
 }

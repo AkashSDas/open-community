@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { setNestedObjectValues } from "formik";
+import { useCallback, useEffect, useState } from "react";
 
 import Greeting from "../components/common/greeting";
 import BigPostWithMostHeartsCard from "../components/home/big_post_with_most_hearts_card";
 import LogoSVG from "../components/svg_icons/logo";
 import ShowSVG from "../components/svg_icons/show";
-import { firestore, fromMillis } from "../lib/firebase";
+import { auth, firestore, fromMillis } from "../lib/firebase";
+import { useUserData } from "../lib/hooks";
 import { convertSecToJsxTime } from "../lib/utils";
 
 function Index() {
@@ -40,6 +42,31 @@ function AuthorToFollow() {
   // to displaying same author multiple times)
 
   const [trendingPosts, setTrendingPosts] = useState(null);
+  const [followings, setFollowings] = useState(null);
+  const { user, username } = useUserData();
+
+  const getFollowings = async () => {
+    if (user && username) {
+      const query = firestore.collection(`/users/${user.uid}/followings`);
+      const followings = (await query.get()).docs.map((doc) => {
+        return {
+          authorId: doc.id,
+          data: doc.data(),
+        };
+      });
+      setFollowings(followings);
+    }
+  };
+
+  const checkFollowing = (authorId: string) => {
+    if (followings) {
+      const result = followings.filter(
+        (author) => author.authorId === authorId
+      );
+      if (result.length > 0) return true;
+    }
+    return false;
+  };
 
   const getTrendingPosts = async (top: number) => {
     const query = firestore
@@ -72,6 +99,7 @@ function AuthorToFollow() {
         metadata: obj.data,
         post: postData,
         author: authorDoc.data(),
+        authorId: authorDoc.id,
       });
     }
 
@@ -82,13 +110,35 @@ function AuthorToFollow() {
     getTrendingPosts(5);
   }, []);
 
+  useEffect(() => {
+    getFollowings();
+  }, [user, username]);
+
+  const follow = async (authorId: string, authorName: string) => {
+    if (user && username) {
+      const ref = firestore.doc(`/users/${user.uid}/followings/${authorId}`);
+      if ((await ref.get()).exists) {
+        // unfollow
+        await ref.delete();
+        setFollowings((f) =>
+          f.filter((author) => author.authorId !== authorId)
+        );
+      } else {
+        // follow
+        await ref.set({ authorName });
+        setFollowings((f) => [...f, { authorId, data: { authorName } }]);
+      }
+    } else {
+      // redirect to login OR sign up page
+    }
+  };
+
   return (
     <div className="authors-to-follow">
       <div className="heading">Authors to follow</div>
-
       {trendingPosts &&
         trendingPosts.map((post, key: number) => (
-          <div className="author-card">
+          <div key={key} className="author-card">
             <img
               src={`${post.author.photoURL}`}
               alt={`${post.author.username}`}
@@ -99,7 +149,14 @@ function AuthorToFollow() {
               {post.author.status && (
                 <div className="status">{post.author.status}</div>
               )}
-              <button className="follow-btn">Follow</button>
+              <button
+                className={`follow-btn follow${
+                  checkFollowing(post.authorId) ? "ing" : ""
+                }`}
+                onClick={() => follow(post.authorId, post.author.username)}
+              >
+                {checkFollowing(post.authorId) ? "Following" : "Follow"}
+              </button>
             </div>
           </div>
         ))}
