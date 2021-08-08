@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Greeting from "../components/common/greeting";
+import ExploreTags from "../components/home/explore_tags";
 import BigPostCard from "../components/post_cards/big_post_card";
 import LogoSVG from "../components/svg_icons/logo";
 import ShowSVG from "../components/svg_icons/show";
@@ -546,23 +547,7 @@ function HomePageTopSection() {
       <BigPostCard hook={useMostHeartedPostDataOnce} />
 
       <aside className="aside">
-        <div className="explore">
-          <div className="heading">Explore your taste</div>
-
-          <div className="tag-btns">
-            <TagButton text="accounting" />
-            <TagButton text="stock-market" />
-            <TagButton text="ipo" />
-            <TagButton text="finance" />
-            <TagButton text="web-dev" />
-            <TagButton text="cloud-computing" />
-            <TagButton text="sports" />
-            <TagButton text="nutrition" />
-            <TagButton text="health" />
-          </div>
-
-          <div className="see-more">See more topics!</div>
-        </div>
+        <ExploreTags />
 
         <div className="promotion">
           <div className="info">
@@ -585,10 +570,6 @@ function HomePageTopSection() {
       </aside>
     </section>
   );
-}
-
-function TagButton(props: { text: string }) {
-  return <button className="tag-btn">#{props.text}</button>;
 }
 
 export default Index;

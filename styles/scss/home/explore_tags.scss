@@ -1,0 +1,40 @@
+$margin: 1rem;
+
+.explore-tags {
+  margin-bottom: $margin;
+}
+
+.explore-tags .heading {
+  @include caption-text;
+  text-transform: uppercase;
+  letter-spacing: 8%;
+  word-spacing: 4%;
+  margin-bottom: $margin;
+}
+
+.explore-tags .tags {
+  margin-bottom: $margin;
+}
+
+.explore-tags .tags .tag {
+  // space between tags
+  $space: 0.5rem;
+
+  margin-right: $space;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem;
+  border-radius: 36px;
+  background-color: var(--light-blue);
+  @include caption-text($color: var(--accent));
+
+  transition: all 100ms ease-in-out;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+}
+
+.explore-tags .link {
+  text-decoration: underline;
+  @include caption-text($color: var(--accent));
+}
