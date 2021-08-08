@@ -1,8 +1,15 @@
-import { useMostHeartedPostDataOnce } from "../../lib/hooks/posts/most_hearted_post";
 import { convertSecToJsxTime } from "../../lib/utils";
 
-function BigPostWithMostHeartsCard() {
-  const { data, loading, error } = useMostHeartedPostDataOnce();
+interface Props {
+  hook(): {
+    data: any;
+    loading: boolean;
+    error: any;
+  };
+}
+
+function BigPostCard({ hook }: Props) {
+  const { data, loading, error } = hook();
 
   if (loading || error || data === null) return <div>Loading...</div>;
 
@@ -60,4 +67,4 @@ function PostCoverImage({ url, alt, readTime }: PostCoverImageProps) {
   );
 }
 
-export default BigPostWithMostHeartsCard;
+export default BigPostCard;

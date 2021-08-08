@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
 import Greeting from "../components/common/greeting";
-import BigPostWithMostHeartsCard from "../components/home/big_post_with_most_hearts_card";
+import BigPostCard from "../components/post_cards/big_post_card";
 import LogoSVG from "../components/svg_icons/logo";
 import ShowSVG from "../components/svg_icons/show";
 import { firestore, fromMillis } from "../lib/firebase";
+import { useMostHeartedPostDataOnce } from "../lib/hooks/posts/most_hearted_post";
 import { useUserData } from "../lib/hooks/user";
 import { convertSecToJsxTime } from "../lib/utils";
 
@@ -542,7 +543,7 @@ function TrendingSection() {
 function HomePageTopSection() {
   return (
     <section className="top-section">
-      <BigPostWithMostHeartsCard />
+      <BigPostCard hook={useMostHeartedPostDataOnce} />
 
       <aside className="aside">
         <div className="explore">
