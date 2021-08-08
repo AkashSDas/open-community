@@ -176,7 +176,7 @@
   display: flex;
   margin-bottom: 2rem;
   height: 151px;
-  width: 716px;
+  // width: 716px;
 
   &:last-of-type {
     margin-bottom: 0;
@@ -241,5 +241,6 @@
 
 .postlist-and-aside {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 65% 35%;
+  gap: 1rem;
 }
