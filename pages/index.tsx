@@ -1,14 +1,9 @@
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import Greeting from "../components/common/greeting";
-import ExploreTags from "../components/home/explore_tags";
-import PromotionSection from "../components/home/promotion_section";
-import BigPostCard from "../components/post_cards/big_post_card";
-import LogoSVG from "../components/svg_icons/logo";
+import HeroSection from "../components/home/hero_section";
 import ShowSVG from "../components/svg_icons/show";
 import { firestore, fromMillis } from "../lib/firebase";
-import { useMostHeartedPostDataOnce } from "../lib/hooks/posts/most_hearted_post";
 import { useUserData } from "../lib/hooks/user";
 import { convertSecToJsxTime } from "../lib/utils";
 
@@ -16,7 +11,7 @@ function Index() {
   return (
     <main className="home">
       <Greeting />
-      <HomePageTopSection />
+      <HeroSection />
       <hr />
       {/* <TrendingSection /> */}
       <hr />
@@ -539,19 +534,6 @@ function TrendingSection() {
           ))}
         </div>
       )}
-    </section>
-  );
-}
-
-function HomePageTopSection() {
-  return (
-    <section className="top-section">
-      <BigPostCard hook={useMostHeartedPostDataOnce} />
-
-      <aside className="aside">
-        <ExploreTags />
-        <PromotionSection />
-      </aside>
     </section>
   );
 }
