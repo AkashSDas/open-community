@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 
+import Divider from "../components/common/divider";
 import Greeting from "../components/common/greeting";
+import SizedBox from "../components/common/sized_box";
 import HeroSection from "../components/home/hero_section";
+import TrendingSection from "../components/home/trending_section";
+import TrendingPostCard from "../components/post_cards/trending_post_card";
 import ShowSVG from "../components/svg_icons/show";
 import { firestore, fromMillis } from "../lib/firebase";
+import { useTrendingPostDataOnce } from "../lib/hooks/posts/trending_post";
 import { useUserData } from "../lib/hooks/user";
 import { convertSecToJsxTime } from "../lib/utils";
 
@@ -11,10 +16,12 @@ function Index() {
   return (
     <main className="home">
       <Greeting />
-      <HeroSection />
-      <hr />
-      {/* <TrendingSection /> */}
-      <hr />
+      {/* <HeroSection /> */}
+      <SizedBox height="2rem" />
+      <Divider />
+      <SizedBox height="2rem" />
+      <TrendingSection />
+      {/* <hr /> */}
       <div className="postlist-and-aside">
         {/* <PostListView /> */}
         {/* <AsideSection /> */}
@@ -459,82 +466,6 @@ function PostCard({ post }) {
         </div>
       </div>
     </div>
-  );
-}
-
-function TrendingSection() {
-  const [trendingPosts, setTrendingPosts] = useState(null);
-
-  const getTrendingPosts = async (top: number) => {
-    const query = firestore
-      .collection("postMetadata")
-      .orderBy("views", "desc")
-      .limit(top);
-
-    const metadata = (await query.get()).docs.map((doc) => {
-      return {
-        id: doc.id,
-        data: doc.data(),
-      };
-    });
-
-    const posts = [];
-    for await (const obj of metadata) {
-      const postQuery = firestore.doc(`/posts/${obj.id}`);
-      let postData = (await postQuery.get()).data();
-      postData = {
-        ...postData,
-        createdAt: postData?.createdAt?.toMillis() || 0,
-        lastmodifiedAt: postData?.lastmodifiedAt?.toMillis() || 0,
-      };
-
-      const authorQuery = firestore.doc(`/users/${postData.authorId}`);
-      const authorDoc = await authorQuery.get();
-
-      posts.push({
-        id: obj.id,
-        metadata: obj.data,
-        post: postData,
-        author: authorDoc.data(),
-      });
-    }
-
-    setTrendingPosts(posts);
-  };
-
-  useEffect(() => {
-    getTrendingPosts(5);
-  }, []);
-
-  return (
-    <section className="trending-section">
-      <h4>Trending on Open Community</h4>
-
-      {trendingPosts && (
-        <div className="posts">
-          {trendingPosts.map((post, key: number) => (
-            <div key={key} className="trending-post-card">
-              <div className="number">0{key + 1}</div>
-              <div className="info">
-                <div className="author-info">
-                  <img
-                    src={`${post.author.photoURL}`}
-                    alt={`${post.author.username}`}
-                  />
-                  <div className="username">{post.author.username}</div>
-                </div>
-                <div className="title">{post.post.title}</div>
-                <div className="metadata">
-                  {convertSecToJsxTime(post.post.lastmodifiedAt)}
-                  <span className="space">-</span>
-                  <ShowSVG /> {post.metadata.views} views
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </section>
   );
 }
 
