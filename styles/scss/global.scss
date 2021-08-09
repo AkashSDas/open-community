@@ -70,3 +70,9 @@ button {
   outline: none;
   border: none;
 }
+
+.divider {
+  width: 100%;
+  border: none;
+  border-bottom: 2px dashed var(--body-text-1);
+}
