@@ -23,7 +23,7 @@ export function useTrendingPostDataOnce(top: number) {
         };
       });
 
-      const posts = [];
+      let posts = [];
       for await (const md of metadata) {
         const postQuery = firestore.doc(`/posts/${md.id}`);
         const post = serializePostDocData(await postQuery.get());
