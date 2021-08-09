@@ -1,66 +1,46 @@
-.authors-to-follow {
-  .heading {
-    text-transform: uppercase;
-    letter-spacing: 4%;
-    @include medium-text;
-
-    margin-bottom: 2rem;
-  }
+.authors-to-follow .heading {
+  @include medium-text;
+  letter-spacing: 4%;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
 }
 
-.authors-to-follow .author-card {
+.authors-to-follow .follow-author-card {
   display: flex;
   margin-bottom: 1rem;
 
   img {
-    width: 60px;
     height: 60px;
+    width: 60px;
     border-radius: 4px;
     margin-right: 1rem;
   }
 
   .info {
-    display: flex;
-    flex-direction: column;
-
-    .username {
-      font-family: var(--font-head);
-      font-weight: 700;
-      font-size: 17px;
-      letter-spacing: 4%;
-      margin-bottom: 0.5rem;
-      color: var(--heading);
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+    .name {
+      @include post-title-text($color: var(--heading));
     }
 
     .status {
-      font-family: var(--font-body);
-      font-weight: 400;
-      font-size: 15px;
-      margin-bottom: 0.5rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      @include caption-text;
     }
 
-    .follow-btn {
-      outline: none;
-      border: none;
+    .name,
+    .status {
+      @include line-clamp(1);
+      margin-bottom: 0.5rem;
+    }
+
+    button {
+      padding: 0.8rem 1rem;
       border-radius: 36px;
       background-color: var(--light-blue);
       color: var(--accent);
-      padding: 0.813rem 1rem;
-      width: fit-content;
-      font-family: var(--font-head);
-    }
 
-    .following {
-      background-color: var(--card-bg-1);
-      color: var(--body-text-1);
+      &.following {
+        background-color: var(--card-bg-1);
+        color: var(--body-text-1);
+      }
     }
   }
 }
