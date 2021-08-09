@@ -334,7 +334,20 @@ function PostListView() {
   return (
     <section className="posts-listview">
       {data.map((d, key: number) => (
-        <div key={key}>{JSON.stringify(d)}</div>
+        <>
+          <PostCard
+            key={key}
+            post={{
+              coverImgURL: d.post.coverImgURL,
+              title: d.post.title,
+              description: d.post.description,
+              lastmodifiedAt: d.post.lastmodifiedAt,
+              views: d.metadata.views,
+              readTime: d.metadata.readTime,
+            }}
+          />
+          <SizedBox height="2rem" />
+        </>
       ))}
 
       {data.length !== 0 && !loading && !postEnds && (
@@ -346,41 +359,45 @@ function PostListView() {
       {postEnds && "You have reached the end!"}
     </section>
   );
-
-  // return (
-  //   <section className="post-listview">
-  //     {posts && posts.map((post, key) => <PostCard key={key} post={post} />)}
-
-  //     {posts.length !== 0 && !loading && !postsEnd && (
-  //       <button onClick={getMorePosts}>Load more</button>
-  //     )}
-
-  //     {loading && <div>Loading...</div>}
-
-  //     {postsEnd && "You have reached the end!"}
-  //   </section>
-  // );
 }
 
-function PostCard({ post }) {
+interface PostCardProps {
+  post: {
+    coverImgURL: string;
+    title: string;
+    description: string;
+    lastmodifiedAt: number;
+    views: number;
+    readTime: number;
+  };
+}
+
+function PostCard({ post }: PostCardProps) {
+  const coverImgJsx = () => (
+    <div className="cover">
+      <img src={`${post.coverImgURL}`} alt={`${post.title}`} />
+      <div className="read-time">{post.readTime}min read</div>
+    </div>
+  );
+
+  const infoJsx = () => (
+    <div className="info">
+      <h4>{post.title}</h4>
+      <div className="description">{post.description}</div>
+      <div className="metadata">
+        <span>{convertSecToJsxTime(post.lastmodifiedAt)}</span>
+        <SizedBox width="0.5rem" />
+        <span>-</span>
+        <SizedBox width="0.5rem" />
+        <span>{post.views} views</span>
+      </div>
+    </div>
+  );
+
   return (
     <div className="post-card">
-      <img className="cover-img" src={`${post.coverImgURL}`} />
-      <div className="info">
-        <h4>{post.title}</h4>
-        <div className="description">{post.description}</div>
-        <div className="other-info">
-          <span>
-            <span>{convertSecToJsxTime(post.lastmodifiedAt)}</span>
-            <span className="space">-</span>
-            <span className="views">
-              <ShowSVG /> {post.views} views
-            </span>
-            <span className="space">-</span>
-            <div className="read-time">{post.readTime}min read</div>
-          </span>
-        </div>
-      </div>
+      {coverImgJsx()}
+      {infoJsx()}
     </div>
   );
 }

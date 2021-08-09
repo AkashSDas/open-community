@@ -1,0 +1,48 @@
+.post-card {
+  display: flex;
+}
+
+.post-card .cover {
+  position: relative;
+  margin-right: 1rem;
+  width: 150px;
+  height: 150px;
+
+  img {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .read-time {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    margin: 0.25em;
+    border-radius: 2px;
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 0.25em;
+
+    @include caption-text(white);
+  }
+}
+
+.post-card .info {
+  h4,
+  .description {
+    @include line-clamp(2);
+    margin-bottom: 0.5rem;
+  }
+
+  .description {
+    @include medium-text;
+  }
+
+  .metadata {
+    display: flex;
+    align-items: center;
+    @include caption-text;
+  }
+}
