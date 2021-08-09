@@ -3,25 +3,28 @@ import { useEffect, useState } from "react";
 import Divider from "../components/common/divider";
 import Greeting from "../components/common/greeting";
 import SizedBox from "../components/common/sized_box";
-import HeroSection from "../components/home/hero_section";
 import TrendingSection from "../components/home/trending_section";
-import TrendingPostCard from "../components/post_cards/trending_post_card";
 import ShowSVG from "../components/svg_icons/show";
 import { firestore, fromMillis } from "../lib/firebase";
-import { useTrendingPostDataOnce } from "../lib/hooks/posts/trending_post";
 import { useUserData } from "../lib/hooks/user";
 import { convertSecToJsxTime } from "../lib/utils";
 
 function Index() {
+  const space = () => (
+    <>
+      <SizedBox height="2rem" />
+      <Divider />
+      <SizedBox height="2rem" />
+    </>
+  );
+
   return (
     <main className="home">
       <Greeting />
       {/* <HeroSection /> */}
-      <SizedBox height="2rem" />
-      <Divider />
-      <SizedBox height="2rem" />
+      {space()}
       <TrendingSection />
-      {/* <hr /> */}
+      {space()}
       <div className="postlist-and-aside">
         {/* <PostListView /> */}
         {/* <AsideSection /> */}
