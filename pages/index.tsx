@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import Divider from "../components/common/divider";
 import Greeting from "../components/common/greeting";
 import SizedBox from "../components/common/sized_box";
-import TrendingSection from "../components/home/trending_section";
+import PostListView from "../components/home/post_listview";
 import ShowSVG from "../components/svg_icons/show";
 import { firestore, fromMillis } from "../lib/firebase";
-import { usePostDataOnce } from "../lib/hooks/posts/posts";
 import { useUserData } from "../lib/hooks/user";
 import { convertSecToJsxTime } from "../lib/utils";
 
@@ -323,81 +322,6 @@ function AuthorToFollow() {
             </div>
           </div>
         ))}
-    </div>
-  );
-}
-
-function PostListView() {
-  const LIMIT = 2;
-  const { data, loading, error, postEnds, getData } = usePostDataOnce(LIMIT);
-
-  return (
-    <section className="posts-listview">
-      {data.map((d, key: number) => (
-        <>
-          <PostCard
-            key={key}
-            post={{
-              coverImgURL: d.post.coverImgURL,
-              title: d.post.title,
-              description: d.post.description,
-              lastmodifiedAt: d.post.lastmodifiedAt,
-              views: d.metadata.views,
-              readTime: d.metadata.readTime,
-            }}
-          />
-          <SizedBox height="2rem" />
-        </>
-      ))}
-
-      {data.length !== 0 && !loading && !postEnds && (
-        <button onClick={() => getData(true)}>Load more</button>
-      )}
-
-      {loading && "Loading..."}
-
-      {postEnds && "You have reached the end!"}
-    </section>
-  );
-}
-
-interface PostCardProps {
-  post: {
-    coverImgURL: string;
-    title: string;
-    description: string;
-    lastmodifiedAt: number;
-    views: number;
-    readTime: number;
-  };
-}
-
-function PostCard({ post }: PostCardProps) {
-  const coverImgJsx = () => (
-    <div className="cover">
-      <img src={`${post.coverImgURL}`} alt={`${post.title}`} />
-      <div className="read-time">{post.readTime}min read</div>
-    </div>
-  );
-
-  const infoJsx = () => (
-    <div className="info">
-      <h4>{post.title}</h4>
-      <div className="description">{post.description}</div>
-      <div className="metadata">
-        <span>{convertSecToJsxTime(post.lastmodifiedAt)}</span>
-        <SizedBox width="0.5rem" />
-        <span>-</span>
-        <SizedBox width="0.5rem" />
-        <span>{post.views} views</span>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="post-card">
-      {coverImgJsx()}
-      {infoJsx()}
     </div>
   );
 }
