@@ -128,3 +128,9 @@ h4 {
   letter-spacing: 0.04em;
   color: $color;
 }
+
+@mixin post-title-text($color: var(--heading)) {
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: $color;
+}
