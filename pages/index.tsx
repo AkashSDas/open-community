@@ -35,7 +35,9 @@ function AsideSection() {
   return (
     <aside>
       <AuthorsToFollow />
+      <SizedBox height="2rem" />
       <Divider />
+      <SizedBox height="2rem" />
       <SmallPostCardtListView />
     </aside>
   );
