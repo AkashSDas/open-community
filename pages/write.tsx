@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import AdminPostCard from "../components/post_cards/admin_post_card";
 import CreateNewPostForm from "../components/write/create_new_post_form";
-import { useUserData } from "../lib/hooks";
+import { useUserData } from "../lib/hooks/user";
 import { createNewPost } from "../lib/posts";
 import { INewPost } from "../lib/posts/interfaces";
 
