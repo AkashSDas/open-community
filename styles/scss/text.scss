@@ -101,6 +101,7 @@ h4 {
 
 @mixin medium-text {
   @include body-font($medium-text);
+  font-weight: 500;
 }
 
 @mixin caption-text($color: null, $line-height: null) {
