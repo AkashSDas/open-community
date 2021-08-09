@@ -1,0 +1,64 @@
+.promotion {
+  position: relative;
+  width: 100%;
+  height: 15.375rem;
+}
+
+.promotion .info,
+.promotion .mask,
+.promotion img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.promotion .mask,
+.promotion img {
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+.promotion .mask {
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.promotion img {
+  z-index: 0;
+}
+
+.promotion svg {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0.5rem;
+  z-index: 2;
+}
+
+.promotion .info {
+  z-index: 2;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h4 {
+    color: white;
+  }
+
+  div {
+    color: rgb(211, 211, 211);
+    margin: 1rem auto;
+  }
+
+  button {
+    padding: 0.875rem 2rem;
+    border-radius: 36px;
+    background-color: white;
+    @include button-text-bold($color: black);
+  }
+}

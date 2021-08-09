@@ -1,7 +1,9 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import Greeting from "../components/common/greeting";
 import ExploreTags from "../components/home/explore_tags";
+import PromotionSection from "../components/home/promotion_section";
 import BigPostCard from "../components/post_cards/big_post_card";
 import LogoSVG from "../components/svg_icons/logo";
 import ShowSVG from "../components/svg_icons/show";
@@ -548,25 +550,7 @@ function HomePageTopSection() {
 
       <aside className="aside">
         <ExploreTags />
-
-        <div className="promotion">
-          <div className="info">
-            <h4>Teaching is to learn twice</h4>
-            <div className="tag-line">
-              Start writing today and Shape the future
-            </div>
-            <button>Start writing</button>
-          </div>
-
-          <div className="mask"></div>
-
-          <img
-            src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
-            alt=""
-          />
-
-          <LogoSVG />
-        </div>
+        <PromotionSection />
       </aside>
     </section>
   );
