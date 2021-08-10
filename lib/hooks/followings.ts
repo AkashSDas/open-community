@@ -7,7 +7,7 @@ export function useFollowingAuthors() {
   const { user, username } = useUserData();
   const [authors, setAuthors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
