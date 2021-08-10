@@ -1,0 +1,95 @@
+$margin: 1rem;
+
+.post-content-view {
+  h2,
+  .description,
+  .info,
+  .tags,
+  .author,
+  .cover-img {
+    margin-bottom: $margin;
+  }
+
+  .description {
+    @include medium-text;
+  }
+}
+
+.post-content-view .info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .metadata {
+    display: flex;
+    align-items: center;
+  }
+
+  button {
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 0.4rem 0.5rem;
+
+    svg path {
+      //   stroke: var(--body-text-1);
+      stroke: var(--primary);
+    }
+  }
+}
+
+.post-content-view .tags {
+  span {
+    margin-right: 0.5rem;
+    color: var(--accent);
+  }
+}
+
+.post-content-view .author {
+  display: flex;
+
+  img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    margin-right: 1rem;
+  }
+
+  div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      @include post-title-text($color: var(--heading));
+      margin-bottom: 0.5rem;
+    }
+
+    .status {
+      @include caption-text;
+    }
+  }
+
+  button {
+    padding: 0.8rem 2rem;
+    height: fit-content;
+    border-radius: 36px;
+    background-color: var(--light-blue);
+    color: var(--accent);
+    font-family: var(--font-head);
+    font-weight: 400;
+
+    &.following {
+      background-color: var(--card-bg-1);
+      color: var(--body-text-1);
+    }
+  }
+}
+
+.post-content-view .cover-img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.post-content-view .content-preview {
+  @include preview-post-content;
+}
