@@ -27,6 +27,7 @@ export function useMostHeartedPostDataOnce() {
       const author = (await authorQuery.get()).data();
 
       setData({
+        id: postQuery.id,
         metadata,
         post,
         author,
