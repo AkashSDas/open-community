@@ -7,6 +7,18 @@ import PostListView from "../components/home/post_listview";
 import SmallPostCardtListView from "../components/home/small_post_card_listview";
 import TrendingSection from "../components/home/trending_section";
 
+function AsideSection() {
+  return (
+    <aside>
+      <AuthorsToFollow />
+      <SizedBox height="2rem" />
+      <Divider />
+      <SizedBox height="2rem" />
+      <SmallPostCardtListView />
+    </aside>
+  );
+}
+
 function Index() {
   const space = () => (
     <>
@@ -28,18 +40,6 @@ function Index() {
         <AsideSection />
       </div>
     </main>
-  );
-}
-
-function AsideSection() {
-  return (
-    <aside>
-      <AuthorsToFollow />
-      <SizedBox height="2rem" />
-      <Divider />
-      <SizedBox height="2rem" />
-      <SmallPostCardtListView />
-    </aside>
   );
 }
 
