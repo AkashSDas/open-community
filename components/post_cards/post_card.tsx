@@ -1,8 +1,11 @@
+import { useRouter } from "next/router";
+
 import { convertSecToJsxTime } from "../../lib/utils";
 import SizedBox from "../common/sized_box";
 
 interface Props {
   post: {
+    id: string;
     coverImgURL: string;
     title: string;
     description: string;
@@ -13,6 +16,8 @@ interface Props {
 }
 
 function PostCard({ post }: Props) {
+  const router = useRouter();
+
   const coverImgJsx = () => (
     <div className="cover">
       <img src={`${post.coverImgURL}`} alt={`${post.title}`} />
@@ -35,7 +40,7 @@ function PostCard({ post }: Props) {
   );
 
   return (
-    <div className="post-card">
+    <div className="post-card" onClick={() => router.push(`/posts/${post.id}`)}>
       {coverImgJsx()}
       {infoJsx()}
     </div>

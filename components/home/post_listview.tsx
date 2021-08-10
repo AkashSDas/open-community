@@ -13,6 +13,7 @@ function PostListView() {
           <PostCard
             key={key}
             post={{
+              id: d.id,
               coverImgURL: d.post.coverImgURL,
               title: d.post.title,
               description: d.post.description,
