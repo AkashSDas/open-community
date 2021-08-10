@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { convertSecToJsxTime } from "../../lib/utils";
 
 interface Props {
@@ -9,6 +11,7 @@ interface Props {
 }
 
 function BigPostCard({ hook }: Props) {
+  const router = useRouter();
   const { data, loading, error } = hook();
 
   if (loading || error || data === null) return <div>Loading...</div>;
@@ -16,7 +19,10 @@ function BigPostCard({ hook }: Props) {
   const { post, metadata, author } = data;
 
   return (
-    <div className="big-post-card">
+    <div
+      className="big-post-card"
+      onClick={() => router.push(`/posts/${data.id}`)}
+    >
       <PostCoverImage
         url={post.coverImgURL}
         alt={post.title}
