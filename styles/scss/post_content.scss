@@ -35,6 +35,14 @@ $margin: 1rem;
       stroke: var(--primary);
     }
   }
+
+  .marked {
+    background: none;
+
+    svg path {
+      fill: var(--accent);
+    }
+  }
 }
 
 .post-content-view .tags {

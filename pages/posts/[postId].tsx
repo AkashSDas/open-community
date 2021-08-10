@@ -5,10 +5,12 @@ import ReactMarkdown from "react-markdown";
 import SizedBox from "../../components/common/sized_box";
 import SavedSVG from "../../components/svg_icons/saved";
 import { firestore } from "../../lib/firebase";
+import { useBookmark } from "../../lib/hooks/bookmark";
 import { useFollowingAuthors } from "../../lib/hooks/followings";
 import { convertSecToJsxTime } from "../../lib/utils";
 
 export interface IPostState {
+  id: string;
   post: any;
   metadata: any;
   content: any;
@@ -23,6 +25,7 @@ function PostContent() {
     metadata: null,
     content: null,
     author: null,
+    id: null,
   });
 
   const {
@@ -49,6 +52,7 @@ function PostContent() {
       const author = await authorQuery.get();
 
       setPostState({
+        id: post.id,
         post: post.data(),
         metadata: metadata.data(),
         content: postContent.data(),
@@ -66,6 +70,22 @@ function PostContent() {
     return false;
   };
 
+  const {
+    bookmark,
+    loading: bookmarkLoading,
+    error: bookmarkError,
+    bookmarkAction,
+  } = useBookmark();
+
+  const checkBookmarked = (postId: string) => {
+    if (bookmark.length !== 0 && !bookmarkLoading && !bookmarkError) {
+      if (bookmark.find((b) => b.id === postId)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   if (
     postState.content !== null &&
     postState.metadata !== null &&
@@ -73,6 +93,8 @@ function PostContent() {
   ) {
     return (
       <PostContentViewSection
+        checkBookmarked={checkBookmarked}
+        bookmarkAction={bookmarkAction}
         checkFollowing={checkFollowing}
         followAction={followAction}
         postState={postState}
@@ -87,12 +109,16 @@ function PostContentViewSection({
   postState,
   checkFollowing,
   followAction,
+  checkBookmarked,
+  bookmarkAction,
 }: {
   postState: IPostState;
   checkFollowing: Function;
   followAction: Function;
+  checkBookmarked: Function;
+  bookmarkAction: Function;
 }) {
-  const { post, metadata, content, author } = postState;
+  const { id, post, metadata, content, author } = postState;
 
   return (
     <main className="post-content-view">
@@ -114,7 +140,10 @@ function PostContentViewSection({
           <span>{metadata.readTime}min read</span>
         </div>
 
-        <button>
+        <button
+          className={`${checkBookmarked(id) ? "marked" : ""}`}
+          onClick={() => bookmarkAction(id, post.authorId)}
+        >
           <SavedSVG />
         </button>
       </div>
