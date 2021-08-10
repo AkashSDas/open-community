@@ -142,7 +142,7 @@ function PostContentViewSection({
 
         <button
           className={`${checkBookmarked(id) ? "marked" : ""}`}
-          onClick={() => bookmarkAction(id, post.authorId)}
+          onClick={async () => await bookmarkAction(id, post.authorId)}
         >
           <SavedSVG />
         </button>

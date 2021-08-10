@@ -26,20 +26,16 @@ $margin: 1rem;
   }
 
   button {
-    background: var(--accent);
-    border-radius: 4px;
-    padding: 0.4rem 0.5rem;
+    background-color: transparent;
 
     svg path {
-      //   stroke: var(--body-text-1);
-      stroke: var(--primary);
+      stroke: var(--body-text-1);
     }
   }
 
   .marked {
-    background: none;
-
     svg path {
+      stroke: var(--heading);
       fill: var(--accent);
     }
   }
