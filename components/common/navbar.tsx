@@ -1,4 +1,7 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useContext } from "react";
+
 import { UserContext } from "../../lib/context";
 import RoundedButton from "../buttons/rounded_btn";
 import CupSVG from "../svg_icons/cup";
@@ -13,8 +16,6 @@ import SettingsSVG from "../svg_icons/settings";
 import ShoppingCartSVG from "../svg_icons/shopping_cart";
 import UserSVG from "../svg_icons/user";
 import UserPlusSVG from "../svg_icons/user_plus";
-import { useRouter } from "next/router";
-import Link from "next/link";
 
 class NavbarSectionItem {
   icon: JSX.Element;
@@ -51,7 +52,13 @@ export function SideNavbar() {
   ];
 
   const section2: NavbarSectionItem[] = [
-    new NavbarSectionItem(<UserSVG />, "Admin", "/admin", true, true),
+    new NavbarSectionItem(
+      <UserSVG />,
+      "Admin",
+      `/admin/${username}`,
+      true,
+      true
+    ),
     new NavbarSectionItem(<SettingsSVG />, "Settings", "/settings", true, true),
   ];
 
