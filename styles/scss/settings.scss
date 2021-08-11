@@ -1,0 +1,7 @@
+.settings-section {
+  .heading {
+    @include body-intro-text;
+    font-weight: 700;
+    color: var(--heading);
+  }
+}
