@@ -1,12 +1,11 @@
-import { useContext, useEffect } from "react";
-import { useCallback } from "react";
-import { Dispatch, SetStateAction, useState } from "react";
+import debounce from "lodash.debounce";
+import { Dispatch, SetStateAction, useCallback, useContext, useEffect, useState } from "react";
+
 import { SignUpWithGoogle } from "../components/buttons/sign_up_btn";
 import HeadingWithIcon from "../components/common/heading_with_icon";
 import LogoSVG from "../components/svg_icons/logo";
 import UserPlusSVG from "../components/svg_icons/user_plus";
 import { UserContext } from "../lib/context";
-import debounce from "lodash.debounce";
 import { firestore } from "../lib/firebase";
 
 function SignUp() {
@@ -80,6 +79,7 @@ function Section2({ signUpInfo, setSignUpInfo }: Section1Props) {
       username: formValue,
       photoURL: user.photoURL,
       displayName: user.displayName,
+      email: user.email,
     });
     batch.set(usernameDoc, { uid: user.uid });
 
