@@ -93,17 +93,11 @@ npm run dev
 ## App Cover
 
 ![](./docs/cover/img-1.png)
-
 ![](./docs/cover/img-2.png)
-
 ![](./docs/cover/img-3.png)
-
 ![](./docs/cover/img-4.png)
-
 ![](./docs/cover/img-5.png)
-
 ![](./docs/cover/img-6.png)
-
 ![](./docs/cover/img-7.png)
 
 ## License
