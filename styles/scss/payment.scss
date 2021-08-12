@@ -1,0 +1,93 @@
+.payment-section .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.payment-section .cards .plan-card {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  box-shadow: 0px 22px 176px rgba(0, 0, 0, 0.05),
+    0px 14.2593px 103.074px rgba(0, 0, 0, 0.037963),
+    0px 8.47407px 56.0593px rgba(0, 0, 0, 0.0303704),
+    0px 4.4px 28.6px rgba(0, 0, 0, 0.025),
+    0px 1.79259px 14.3407px rgba(0, 0, 0, 0.0196296),
+    0px 0.407407px 6.92593px rgba(0, 0, 0, 0.012037);
+  border-radius: 20px;
+}
+
+.payment-section .cards .plan-card {
+  .heading {
+    @include button-text-bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .price-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+
+    .icon {
+      color: var(--heading);
+    }
+
+    .price {
+      font-family: var(--font-head);
+      color: var(--heading);
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 60px;
+    }
+
+    .plan-type {
+      align-self: flex-end;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .description {
+    margin: auto 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  button {
+    padding: 14px 32px 13px;
+
+    background: #0085ff;
+    box-shadow: 0px 27px 89px rgba(0, 133, 255, 0.19),
+      0px 15.8976px 46.4224px rgba(0, 133, 255, 0.137408),
+      0px 8.1648px 21.7872px rgba(0, 133, 255, 0.106704),
+      0px 3.2832px 9.5408px rgba(0, 133, 255, 0.083296),
+      0px 0.7344px 4.1296px rgba(0, 133, 255, 0.052592);
+    border-radius: 35px;
+
+    font-size: 17px;
+    letter-spacing: 4%;
+    font-weight: 700;
+    font-family: var(--font-head);
+    color: white;
+  }
+}
+
+.payment-section .plan-form {
+  margin-bottom: 10rem;
+
+  .label {
+    margin-bottom: 1rem;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .card-field {
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--card-bg-1);
+    margin-bottom: 1rem;
+  }
+}
