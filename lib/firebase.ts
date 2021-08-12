@@ -58,3 +58,19 @@ export function serializePostDocData(doc: FirestoreDocumentData): {
     lastmodifiedAt: data?.lastmodifiedAt.toMillis() || 0,
   };
 }
+
+/**
+ * Throws an error if the currentUser does not exist on the request
+ * Used in apis in this app
+ */
+function validateUser(req: Request) {
+  const user = req["currentUser"];
+
+  if (!user) {
+    throw new Error(
+      "You must be logged in to make this request. i.e Authroization: Bearer <token>"
+    );
+  }
+
+  return user;
+}
