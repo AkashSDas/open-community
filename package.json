@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.4.1",
+    "@stripe/stripe-js": "^1.16.0",
     "firebase": "^8.8.1",
+    "firebase-admin": "^9.11.0",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "lodash.debounce": "^4.0.8",
@@ -20,7 +23,8 @@
     "react-firebase-hooks": "^3.0.4",
     "react-markdown": "^6.0.3",
     "react-use-scroll-position": "^2.0.0",
-    "sass": "^1.37.0"
+    "sass": "^1.37.0",
+    "stripe": "^8.168.0"
   },
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.6",
