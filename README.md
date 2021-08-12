@@ -100,6 +100,10 @@ npm run dev
 ![](./docs/cover/img-6.png)
 ![](./docs/cover/img-7.png)
 
+## Figma UI Design
+
+The figma ui design file is available in `/figma_ui_design/open-community-ui-design`.
+
 ## License
 
 [MIT](./LICENSE)
