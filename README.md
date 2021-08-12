@@ -1,34 +1,111 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# open-community
 
-## Getting Started
+Open Community app is inspired by Medium.com. It designs are made using Figma, following all the design principles and following the Design System build for the app and for building the app Next JS, Firebase and TypeScript are used. For payment solutions like subscription Stripe is used.
 
-First, run the development server:
+- UI desiging for app is done using Figma (with Design System)
+- Different hydration methods of Next JS are used for good performance and SEO.
+- Custom hooks and react-firebase-hooks package are used to work with firebase
+- Next JS apis are used for creating api routes for payment solutions
+- TypeScript and SASS are used for increasing speed and writing reusable code
+- Stripe is used for payment solutions - subscription, webhooks, payment intent, creating customers, integrating with Firebase, 3D secure payments
+- In SASS mixins are used for creating Design System for the app
+
+## Getting started
+
+Clone the repo
+
+```bash
+git clone https://github.com/AkashSDas/open-community.git
+```
+
+Get inside the project folder and install everything
+
+```bash
+npm install
+```
+
+Setup env variables by creating `.env.local` file at root of the project and add following variables with your values
+
+```.env
+NEXT_PUBLIC_FIREBASE_API_KEY=""
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=""
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=""
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=""
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=""
+NEXT_PUBLIC_FIREBASE_APP_ID=""
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=""
+
+NEXT_PUBLIC_BASE_URL="http://localhost:3000/api/"
+
+STRIPE_SECRET=""
+STRIPE_WEBHOOK_SECRET=""
+```
+
+Listen to stripe webhook by running the following command in terminal (Note: you've to have Stripe CLI downloaded, follow the offical doc to download it in local system). This is needed since webhooks are listened in our local system
+
+```bash
+stripe listen --forward-to localhost:8000/api/payments/hooks
+```
+
+Trigger stripe webhooks
+
+```bash
+stripe trigger customer.subscription.created
+stripe trigger customer.subscription.deleted
+stripe trigger invoice.failed
+stripe trigger payment_intent.failed
+```
+
+Listen to different event in stripe by running the following commands
+
+```bash
+stripe listen --events=customer.subscription.deleted
+stripe listen --events=customer.subscription.created
+stripe listen --events=invoice.failed
+stripe listen --events=payment_intent.failed
+```
+
+Starting the app
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## To Do
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Implement validations for forms (Formik)
+- Handle errors in frontend and apis in backend
+- Give feedback using react-hot-toast
+- Create card animation in loading state
+- Change styling in navbar when non selected items are hovered
+- Add animations using framer-motions
+- Implement ISR data hydration techinque for post content page
+- Refactor data modelling for app data in firestore
+- Implement image upload in firebase storage
+- Write firestore and storage security rules
+- Write tests for frontend and backend
+- Look and change data hydration (according) for different pages
+- Optimize images
+- Make the app responsive
+- Implement hearts and views feature for posts
+- Implement comments and replies feature for posts
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## App Cover
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+![](./docs/cover/img-1.png)
 
-## Learn More
+![](./docs/cover/img-2.png)
 
-To learn more about Next.js, take a look at the following resources:
+![](./docs/cover/img-3.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![](./docs/cover/img-4.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![](./docs/cover/img-5.png)
 
-## Deploy on Vercel
+![](./docs/cover/img-6.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![](./docs/cover/img-7.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+
+[MIT](./LICENSE)
